@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Environment — NEVER commit this
+backend/.env
+portfolio.json
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# ML model caches (auto-regenerated)
+*.joblib
+*.h5
+*.keras
+
+# macOS
+.DS_Store
+.idea/
+*.swp
