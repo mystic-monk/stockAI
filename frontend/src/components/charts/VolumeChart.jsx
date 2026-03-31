@@ -25,17 +25,17 @@ export default function VolumeChart({ bars = [], height = 120 }) {
     const seen = new Set()
     const validBars = bars.filter((b) => {
       const t = typeof b.datetime === 'number' ? b.datetime : Math.floor(new Date(b.datetime).getTime() / 1000)
-      if (!t || isNaN(b.volume) || seen.has(t)) return false
-      b._epoch = t
-      seen.add(t)
-      return true
+      return t && !isNaN(b.volume) && !seen.has(t) && seen.add(t)
     })
 
-    const data = validBars.map((b) => ({
-      time:  b._epoch,
-      value: b.volume,
-      color: b.close >= b.open ? 'rgba(0,210,106,0.5)' : 'rgba(244,63,94,0.5)',
-    }))
+    const data = validBars.map((b) => {
+      const time = typeof b.datetime === 'number' ? b.datetime : Math.floor(new Date(b.datetime).getTime() / 1000)
+      return {
+        time,
+        value: b.volume,
+        color: b.close >= b.open ? 'rgba(0,210,106,0.5)' : 'rgba(244,63,94,0.5)',
+      }
+    })
     data.sort((a, b) => a.time - b.time)
 
     series.setData(data)

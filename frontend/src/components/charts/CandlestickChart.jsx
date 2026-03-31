@@ -43,16 +43,16 @@ export default function CandlestickChart({ bars = [], indicators = null, predict
     const seen = new Set()
     const validBars = bars.filter((b) => {
       const t = typeof b.datetime === 'number' ? b.datetime : Math.floor(new Date(b.datetime).getTime() / 1000)
-      if (!t || isNaN(b.open) || seen.has(t)) return false
-      b._epoch = t // stash safe time
-      seen.add(t)
-      return true
+      return t && !isNaN(b.open) && !seen.has(t) && seen.add(t)
     })
 
-    const candleData = validBars.map((b) => ({
-      time:  b._epoch,
-      open:  b.open, high: b.high, low: b.low, close: b.close,
-    }))
+    const candleData = validBars.map((b) => {
+      const time = typeof b.datetime === 'number' ? b.datetime : Math.floor(new Date(b.datetime).getTime() / 1000)
+      return {
+        time,
+        open:  b.open, high: b.high, low: b.low, close: b.close,
+      }
+    })
     
     candleData.sort((a, b) => a.time - b.time)
     candles.setData(candleData)
@@ -105,15 +105,15 @@ export default function CandlestickChart({ bars = [], indicators = null, predict
       const pSeen = new Set()
       const pValid = peerData.bars.filter((b) => {
         const t = typeof b.datetime === 'number' ? b.datetime : Math.floor(new Date(b.datetime).getTime() / 1000)
-        if (!t || isNaN(b.close) || pSeen.has(t)) return false
-        b._epoch = t
-        pSeen.add(t)
-        return true
+        return t && !isNaN(b.close) && !pSeen.has(t) && pSeen.add(t)
       })
-      const peerLineData = pValid.map((b) => ({
-        time: b._epoch,
-        value: b.close
-      })).filter((b) => b.time && !isNaN(b.value))
+      const peerLineData = pValid.map((b) => {
+        const time = typeof b.datetime === 'number' ? b.datetime : Math.floor(new Date(b.datetime).getTime() / 1000)
+        return {
+          time,
+          value: b.close
+        }
+      }).filter((b) => b.time && !isNaN(b.value))
       
       peerSeries.setData(peerLineData)
     }
