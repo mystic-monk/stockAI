@@ -7,6 +7,9 @@ venv/
 *.egg-info/
 dist/
 build/
+logs/
+
+*.log
 
 # Environment — NEVER commit this
 backend/.env
