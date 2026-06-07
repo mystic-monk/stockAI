@@ -7,6 +7,7 @@ import axios from 'axios'
 const TABS = [
   { id: 'analysis',  label: 'Analysis' },
   { id: 'portfolio', label: 'Portfolio' },
+  { id: 'discover',  label: 'Discover' },
   { id: 'models',    label: 'Models' },
 ]
 

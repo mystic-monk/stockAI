@@ -5,6 +5,7 @@ import Sidebar from './components/layout/Sidebar'
 import AnalysisPage from './pages/AnalysisPage'
 import PortfolioPage from './pages/PortfolioPage'
 import ModelMonitorPage from './pages/ModelMonitorPage'
+import DiscoverPage from './pages/DiscoverPage'
 import useStore from './store/useStore'
 
 class ErrorBoundary extends Component {
@@ -50,6 +51,7 @@ export default function App() {
           {activeTab === 'analysis'  && <AnalysisPage />}
           {activeTab === 'portfolio' && <PortfolioPage />}
           {activeTab === 'models'    && <ModelMonitorPage />}
+          {activeTab === 'discover'  && <DiscoverPage />}
         </ErrorBoundary>
       </main>
 
