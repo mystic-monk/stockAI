@@ -16,6 +16,7 @@ api.interceptors.response.use(
 // ── Stocks ──────────────────────────────────────────────────────────────────
 export const stocksApi = {
   getPopular: () => api.get('/stocks/popular'),
+  scan: () => api.get('/stocks/scan', { timeout: 300000 }),
   getQuote: (stockCode, exchangeCode = 'NSE') =>
     api.get('/stocks/quote', { params: { stock_code: stockCode, exchange_code: exchangeCode } }),
   getHistory: (stockCode, exchangeCode = 'NSE', interval = '1day', days = 365) =>

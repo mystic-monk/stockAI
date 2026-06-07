@@ -2,6 +2,7 @@
 
 import logging
 import random
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from fastapi import APIRouter, HTTPException, Query
 
@@ -11,6 +12,7 @@ from services.data_fetcher import (
     get_live_quote,
 )
 from services.feature_engineering import add_indicators, latest_indicators
+from services.ml_ensemble import predict_ensemble
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -68,6 +70,68 @@ def get_peer_stocks(stock_code: str, max_peers: int = 4):
         "sector": sector or "Unknown",
         "sector_known": sector_known,
         "peers": peers,
+    }
+
+
+def _scan_one(stock: dict) -> dict:
+    """Fetch quote + run ensemble for a single stock. Thread-safe."""
+    code     = stock["stock_code"]
+    exchange = stock.get("exchange_code", "NSE")
+    base = {
+        "stock_code":   code,
+        "name":         stock.get("name", code),
+        "sector":       stock.get("sector", ""),
+        "exchange_code": exchange,
+        "current_price": 0.0,
+        "change_pct":    0.0,
+        "signal":        None,
+        "confidence":    0.0,
+        "avg_prob_up":   0.0,
+        "avg_prob_down": 0.0,
+        "target_price":  0.0,
+        "stop_loss":     0.0,
+        "error":         None,
+    }
+    try:
+        quote = get_live_quote(code, exchange)
+        base["current_price"] = round(quote.get("last_price", 0.0), 2)
+        base["change_pct"]    = round(quote.get("change_pct", 0.0), 2)
+
+        df     = get_historical_data(code, exchange, interval="1day", days=500)
+        df_ind = add_indicators(df)
+        pred   = predict_ensemble(code, df_ind, base["current_price"])
+
+        base.update({
+            "signal":       pred["signal"],
+            "confidence":   pred["confidence"],
+            "avg_prob_up":  pred["avg_prob_up"],
+            "avg_prob_down": pred["avg_prob_down"],
+            "target_price": pred["target_price"],
+            "stop_loss":    pred["stop_loss"],
+        })
+    except Exception as exc:
+        logger.warning("Scan failed for %s: %s", code, exc)
+        base["error"] = str(exc)[:120]
+    return base
+
+
+@router.get("/scan")
+def scan_stocks():
+    """Run AI predictions on all popular stocks in parallel (4 workers)."""
+    results = []
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        futures = {pool.submit(_scan_one, s): s for s in POPULAR_STOCKS}
+        for future in as_completed(futures):
+            results.append(future.result())
+
+    order = {"BUY": 0, "HOLD": 1, "SELL": 2, None: 3}
+    results.sort(key=lambda r: (order.get(r["signal"], 3), -r["confidence"]))
+    buy_c  = sum(1 for r in results if r["signal"] == "BUY")
+    sell_c = sum(1 for r in results if r["signal"] == "SELL")
+    hold_c = sum(1 for r in results if r["signal"] == "HOLD")
+    return {
+        "results":  results,
+        "summary":  {"buy": buy_c, "sell": sell_c, "hold": hold_c, "total": len(results)},
     }
 
 
