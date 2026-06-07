@@ -45,7 +45,7 @@ export const portfolioApi = {
 // ── Auth ─────────────────────────────────────────────────────────────────────
 export const authApi = {
   status: () => api.get('/auth/status'),
-  updateSession: (token) => api.post('/auth/session', { session_token: token }),
+  updateSession: (payload) => api.post('/auth/session', payload),
 }
 
 // ── Models ───────────────────────────────────────────────────────────────────
@@ -54,6 +54,9 @@ export const modelsApi = {
   getStockStatus: (stockCode) => api.get(`/models/status/${stockCode}`),
   retrain: (stockCode, exchangeCode = 'NSE') =>
     api.post(`/models/${stockCode}/retrain`, null, { params: { exchange_code: exchangeCode } }),
+  tune: (stockCode, nTrials = 20, exchangeCode = 'NSE') =>
+    api.post(`/models/${stockCode}/tune`, null, { params: { n_trials: nTrials, exchange_code: exchangeCode } }),
   deleteModel: (stockCode) => api.delete(`/models/${stockCode}`),
+  retrainAll: () => api.post('/models/retrain-all'),
   deleteAll: () => api.delete('/models/'),
 }

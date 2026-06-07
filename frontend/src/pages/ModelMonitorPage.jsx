@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react'
 import {
   RefreshCw, Trash2, RotateCcw, AlertTriangle,
   CheckCircle, Clock, Database, Brain, ChevronDown, ChevronUp,
-  TrendingUp, TrendingDown, Minus,
+  TrendingUp, TrendingDown, Minus, Sliders,
 } from 'lucide-react'
 import { modelsApi } from '../services/api'
 import toast from 'react-hot-toast'
@@ -108,9 +108,10 @@ function FeatureBar({ name, value, max }) {
 }
 
 // ── Model card ────────────────────────────────────────────────────────────────
-function ModelCard({ model, onRetrain, onDelete, retrainingSet }) {
+function ModelCard({ model, onRetrain, onTune, onDelete, retrainingSet, tuningSet }) {
   const [expanded, setExpanded] = useState(false)
   const isRetraining = retrainingSet.has(model.stock_code)
+  const isTuning     = tuningSet.has(model.stock_code)
 
   const cvModels = model.cv_metrics || {}
   const gbr      = model.gbr_metrics || {}
@@ -157,10 +158,16 @@ function ModelCard({ model, onRetrain, onDelete, retrainingSet }) {
             {expanded ? <ChevronUp size={11} /> : <ChevronDown size={11} />}
             {expanded ? 'Less' : 'Details'}
           </button>
-          <button onClick={() => onRetrain(model.stock_code)} disabled={isRetraining}
-            style={{ background: 'var(--bg-elevated)', border: '1px solid var(--primary)', borderRadius: 6, padding: '4px 8px', color: 'var(--primary)', cursor: isRetraining ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, opacity: isRetraining ? 0.6 : 1 }}>
+          <button onClick={() => onRetrain(model.stock_code)} disabled={isRetraining || isTuning}
+            style={{ background: 'var(--bg-elevated)', border: '1px solid var(--primary)', borderRadius: 6, padding: '4px 8px', color: 'var(--primary)', cursor: (isRetraining || isTuning) ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, opacity: (isRetraining || isTuning) ? 0.6 : 1 }}>
             <RotateCcw size={11} className={isRetraining ? 'pulse' : ''} />
             {isRetraining ? 'Queued…' : 'Retrain'}
+          </button>
+          <button onClick={() => onTune(model.stock_code)} disabled={isTuning || isRetraining}
+            title="Run Optuna hyperparameter search (~2–5 min)"
+            style={{ background: isTuning ? 'var(--bg-elevated)' : 'rgba(139,92,246,0.1)', border: '1px solid #8b5cf6', borderRadius: 6, padding: '4px 8px', color: '#8b5cf6', cursor: (isTuning || isRetraining) ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, opacity: (isTuning || isRetraining) ? 0.6 : 1 }}>
+            <Sliders size={11} className={isTuning ? 'pulse' : ''} />
+            {isTuning ? 'Tuning…' : 'Tune'}
           </button>
           <button onClick={() => onDelete(model.stock_code)}
             style={{ background: 'var(--sell-dim)', border: '1px solid var(--sell)', borderRadius: 6, padding: '4px 8px', color: 'var(--sell)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 11 }}>
@@ -305,7 +312,9 @@ function SummaryCard({ icon: Icon, label, value, color, sub }) {
 export default function ModelMonitorPage() {
   const [models, setModels]         = useState([])
   const [loading, setLoading]       = useState(false)
-  const [retraining, setRetraining] = useState(new Set())
+  const [retraining, setRetraining]     = useState(new Set())
+  const [retrainingAll, setRetrainingAll] = useState(false)
+  const [tuning, setTuning]         = useState(new Set())
   const [filter, setFilter]         = useState('all')
   const [search, setSearch]         = useState('')
 
@@ -336,6 +345,33 @@ export default function ModelMonitorPage() {
       setRetraining(s => { const n = new Set(s); n.delete(stockCode); return n })
       load()
     }, 30000)
+  }
+
+  const handleTune = async (stockCode) => {
+    setTuning(s => new Set([...s, stockCode]))
+    try {
+      await modelsApi.tune(stockCode)
+      toast.success(`Tuning ${stockCode} — takes 2–5 min, will reload when done`)
+    } catch (e) {
+      toast.error(e.message)
+      setTuning(s => { const n = new Set(s); n.delete(stockCode); return n })
+    }
+    setTimeout(() => {
+      setTuning(s => { const n = new Set(s); n.delete(stockCode); return n })
+      load()
+    }, 5 * 60 * 1000)
+  }
+
+  const handleRetrainAll = async () => {
+    setRetrainingAll(true)
+    try {
+      const data = await modelsApi.retrainAll()
+      toast.success(data.message || `Retraining ${data.queued?.length ?? 0} stocks in background`)
+    } catch (e) {
+      toast.error(e.message)
+    } finally {
+      setRetrainingAll(false)
+    }
   }
 
   const handleDelete = async (stockCode) => {
@@ -395,6 +431,12 @@ export default function ModelMonitorPage() {
           <button onClick={load}
             style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 7, color: 'var(--text-secondary)', fontSize: 12, cursor: 'pointer' }}>
             <RefreshCw size={12} className={loading ? 'pulse' : ''} /> Refresh
+          </button>
+          <button onClick={handleRetrainAll} disabled={retrainingAll}
+            title="Retrain all portfolio holdings"
+            style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', background: 'rgba(59,130,246,0.1)', border: '1px solid var(--primary)', borderRadius: 7, color: 'var(--primary)', fontSize: 12, cursor: retrainingAll ? 'not-allowed' : 'pointer', opacity: retrainingAll ? 0.6 : 1 }}>
+            <RotateCcw size={12} className={retrainingAll ? 'pulse' : ''} />
+            {retrainingAll ? 'Queuing…' : 'Retrain All'}
           </button>
           <button onClick={handleDeleteAll}
             style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', background: 'var(--sell-dim)', border: '1px solid var(--sell)', borderRadius: 7, color: 'var(--sell)', fontSize: 12, cursor: 'pointer' }}>
@@ -459,7 +501,7 @@ export default function ModelMonitorPage() {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(500px, 1fr))', gap: 12 }}>
           {filtered.map(m => (
-            <ModelCard key={m.stock_code} model={m} onRetrain={handleRetrain} onDelete={handleDelete} retrainingSet={retraining} />
+            <ModelCard key={m.stock_code} model={m} onRetrain={handleRetrain} onTune={handleTune} onDelete={handleDelete} retrainingSet={retraining} tuningSet={tuning} />
           ))}
         </div>
       )}

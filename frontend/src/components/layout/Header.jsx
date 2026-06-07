@@ -49,17 +49,44 @@ function MarketClock() {
 
 // ── Session token modal ────────────────────────────────────────────────────────
 
+const inputStyle = {
+  width: '100%', boxSizing: 'border-box',
+  padding: '9px 12px', borderRadius: 8, fontSize: 13,
+  background: 'var(--bg-elevated)', border: '1px solid var(--border)',
+  color: 'var(--text-primary)', fontFamily: 'monospace',
+}
+
+function Field({ label, hint, value, onChange, placeholder, autoFocus }) {
+  return (
+    <div style={{ marginBottom: 12 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+        <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>{label}</span>
+        {hint && <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{hint}</span>}
+      </div>
+      <input value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
+        autoFocus={autoFocus} style={inputStyle} />
+    </div>
+  )
+}
+
 function SessionModal({ onClose }) {
-  const [token, setToken]   = useState('')
-  const [saving, setSaving] = useState(false)
-  const [result, setResult] = useState(null)   // { ok, message }
+  const [apiKey,    setApiKey]    = useState('')
+  const [apiSecret, setApiSecret] = useState('')
+  const [sessionId, setSessionId] = useState('')
+  const [saving, setSaving]       = useState(false)
+  const [result, setResult]       = useState(null)
 
   const save = async () => {
-    if (!token.trim()) return
+    const payload = {}
+    if (apiKey.trim())    payload.api_key       = apiKey.trim()
+    if (apiSecret.trim()) payload.api_secret    = apiSecret.trim()
+    if (sessionId.trim()) payload.session_token = sessionId.trim()
+    if (!Object.keys(payload).length) return
+
     setSaving(true)
     setResult(null)
     try {
-      const res = await axios.post('/api/auth/session', { session_token: token.trim() })
+      const res = await axios.post('/api/auth/session', payload)
       setResult({ ok: true, message: res.data.message || 'Connected!' })
     } catch (e) {
       setResult({ ok: false, message: e.response?.data?.detail || e.message })
@@ -68,6 +95,8 @@ function SessionModal({ onClose }) {
     }
   }
 
+  const hasAny = apiKey.trim() || apiSecret.trim() || sessionId.trim()
+
   return (
     <div style={{
       position: 'fixed', inset: 0, zIndex: 1000,
@@ -75,38 +104,50 @@ function SessionModal({ onClose }) {
     }} onClick={onClose}>
       <div style={{
         background: 'var(--bg-surface)', border: '1px solid var(--border)',
-        borderRadius: 14, padding: 28, width: 440, maxWidth: '90vw',
+        borderRadius: 14, padding: 28, width: 460, maxWidth: '90vw',
       }} onClick={e => e.stopPropagation()}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
+
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <KeyRound size={18} style={{ color: 'var(--primary)' }} />
-            <span style={{ fontWeight: 700, fontSize: 15 }}>Refresh Breeze Session</span>
+            <span style={{ fontWeight: 700, fontSize: 15 }}>Breeze Credentials</span>
           </div>
           <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
             <X size={18} />
           </button>
         </div>
 
-        <ol style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.8, paddingLeft: 18, marginBottom: 18 }}>
-          <li>Visit <code style={{ background: 'var(--bg-elevated)', padding: '1px 5px', borderRadius: 4 }}>api.icicidirect.com/apiuser/login?api_key=…</code></li>
-          <li>Log in with your ICICI Direct credentials</li>
-          <li>After redirect, copy the <strong>apisession</strong> value from the URL</li>
-          <li>Paste it below — no restart needed</li>
-        </ol>
+        <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 18, lineHeight: 1.6 }}>
+          Leave a field blank to keep its existing value. Only filled fields are updated.
+        </p>
 
-        <input
-          value={token}
-          onChange={e => setToken(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && save()}
-          placeholder="Paste session token here…"
+        <Field
+          label="API Key"
+          hint="from registered app on api.icicidirect.com"
+          value={apiKey} onChange={setApiKey}
+          placeholder="e.g. A1b2C3d4E5f6…"
           autoFocus
-          style={{
-            width: '100%', boxSizing: 'border-box',
-            padding: '9px 12px', borderRadius: 8, fontSize: 13,
-            background: 'var(--bg-elevated)', border: '1px solid var(--border)',
-            color: 'var(--text-primary)', fontFamily: 'monospace', marginBottom: 12,
-          }}
         />
+        <Field
+          label="Secret Key"
+          hint="from registered app"
+          value={apiSecret} onChange={setApiSecret}
+          placeholder="API secret…"
+        />
+
+        <div style={{ borderTop: '1px solid var(--border)', paddingTop: 14, marginBottom: 12 }}>
+          <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 10, lineHeight: 1.7 }}>
+            To get the <strong style={{ color: 'var(--text-secondary)' }}>Session ID</strong>:
+            visit <code style={{ background: 'var(--bg-elevated)', padding: '1px 5px', borderRadius: 4, fontSize: 11 }}>api.icicidirect.com/apiuser/login?api_key=YOUR_KEY</code>,
+            log in, then copy the <strong style={{ color: 'var(--text-secondary)' }}>apisession</strong> value from the redirect URL.
+          </div>
+          <Field
+            label="Session ID"
+            hint="from redirect URL · expires daily"
+            value={sessionId} onChange={setSessionId}
+            placeholder="Paste apisession value…"
+          />
+        </div>
 
         {result && (
           <div style={{
@@ -126,8 +167,8 @@ function SessionModal({ onClose }) {
           </button>
           <button
             onClick={save}
-            disabled={!token.trim() || saving}
-            style={{ padding: '8px 18px', borderRadius: 7, background: 'var(--primary)', border: 'none', color: '#fff', fontSize: 13, fontWeight: 600, cursor: saving ? 'not-allowed' : 'pointer', opacity: saving ? 0.7 : 1 }}
+            disabled={!hasAny || saving}
+            style={{ padding: '8px 18px', borderRadius: 7, background: 'var(--primary)', border: 'none', color: '#fff', fontSize: 13, fontWeight: 600, cursor: (saving || !hasAny) ? 'not-allowed' : 'pointer', opacity: (saving || !hasAny) ? 0.7 : 1 }}
           >
             {saving ? 'Connecting…' : 'Save & Reconnect'}
           </button>

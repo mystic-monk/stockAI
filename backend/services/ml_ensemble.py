@@ -1,4 +1,4 @@
-"""Multi-model ensemble: direction (majority vote) + price regression.
+"""Multi-model ensemble: direction (soft-vote) + price regression.
 
 Direction classifiers (train on 5-day forward return with 2% threshold):
   1. Random Forest
@@ -17,6 +17,10 @@ Target definition:
   - HOLD otherwise
   Using 5-day forward return rather than 1-day reduces noise significantly.
   2% threshold creates cleaner BUY/SELL labels vs daily ±0.5% noise.
+
+Ensemble signal: soft-vote (avg probability across models), not hard majority.
+CV: TimeSeriesSplit (no shuffle) to prevent lookahead bias.
+Targets/stop-loss: ATR-based, not fixed percentage.
 """
 
 import logging
@@ -33,7 +37,7 @@ from sklearn.ensemble import (
     RandomForestClassifier,
 )
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import cross_val_score, train_test_split
+from sklearn.model_selection import TimeSeriesSplit, cross_val_score, train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 
@@ -79,6 +83,7 @@ DIRECTION_FEATURES = [
     # Volatility / volume
     "atr", "high_low_range",
     "vol_sma_ratio", "vol_ratio_lag1",
+    "obv_roc5", "obv_sma_ratio",
     # Candle structure
     "body_pct", "upper_wick", "lower_wick",
 ]
@@ -158,6 +163,7 @@ def train_ensemble(stock_code: str, df: pd.DataFrame, force: bool = False) -> di
         if len(X_dir) < 80:
             raise ValueError(f"Not enough data for {stock_code} (need ≥ 80 rows after feature calculation)")
 
+        tscv = TimeSeriesSplit(n_splits=5)
         models: dict = {}
         cv_metrics: dict = {}
 
@@ -171,8 +177,8 @@ def train_ensemble(stock_code: str, df: pd.DataFrame, force: bool = False) -> di
                                         min_samples_split=15, class_weight="balanced",
                                         random_state=42, n_jobs=-1)
         cv_metrics["rf"] = {
-            "accuracy": round(float(cross_val_score(rf_cv, X_dir, y_dir, cv=5, scoring="accuracy").mean()), 3),
-            "f1":       round(float(cross_val_score(rf_cv, X_dir, y_dir, cv=5, scoring="f1_weighted").mean()), 3),
+            "accuracy": round(float(cross_val_score(rf_cv, X_dir, y_dir, cv=tscv, scoring="accuracy").mean()), 3),
+            "f1":       round(float(cross_val_score(rf_cv, X_dir, y_dir, cv=tscv, scoring="f1_weighted").mean()), 3),
         }
 
         # ── 2. Extra Trees ───────────────────────────────────────────────
@@ -184,8 +190,8 @@ def train_ensemble(stock_code: str, df: pd.DataFrame, force: bool = False) -> di
         et_cv = ExtraTreesClassifier(n_estimators=100, max_depth=6,
                                       class_weight="balanced", random_state=7, n_jobs=-1)
         cv_metrics["et"] = {
-            "accuracy": round(float(cross_val_score(et_cv, X_dir, y_dir, cv=5, scoring="accuracy").mean()), 3),
-            "f1":       round(float(cross_val_score(et_cv, X_dir, y_dir, cv=5, scoring="f1_weighted").mean()), 3),
+            "accuracy": round(float(cross_val_score(et_cv, X_dir, y_dir, cv=tscv, scoring="accuracy").mean()), 3),
+            "f1":       round(float(cross_val_score(et_cv, X_dir, y_dir, cv=tscv, scoring="f1_weighted").mean()), 3),
         }
 
         # ── 3. Gradient Boosting ─────────────────────────────────────────
@@ -198,8 +204,8 @@ def train_ensemble(stock_code: str, df: pd.DataFrame, force: bool = False) -> di
                                              learning_rate=0.05, subsample=0.8,
                                              n_iter_no_change=10, random_state=42)
         cv_metrics["gbc"] = {
-            "accuracy": round(float(cross_val_score(gbc_cv, X_dir, y_dir, cv=5, scoring="accuracy").mean()), 3),
-            "f1":       round(float(cross_val_score(gbc_cv, X_dir, y_dir, cv=5, scoring="f1_weighted").mean()), 3),
+            "accuracy": round(float(cross_val_score(gbc_cv, X_dir, y_dir, cv=tscv, scoring="accuracy").mean()), 3),
+            "f1":       round(float(cross_val_score(gbc_cv, X_dir, y_dir, cv=tscv, scoring="f1_weighted").mean()), 3),
         }
 
         # ── 4. XGBoost (optional) ─────────────────────────────────────────
@@ -219,8 +225,8 @@ def train_ensemble(stock_code: str, df: pd.DataFrame, force: bool = False) -> di
                 eval_metric="mlogloss", random_state=42, n_jobs=-1, verbosity=0,
             )
             cv_metrics["xgb"] = {
-                "accuracy": round(float(cross_val_score(xgb_cv, X_dir, y_xgb, cv=5, scoring="accuracy").mean()), 3),
-                "f1":       round(float(cross_val_score(xgb_cv, X_dir, y_xgb, cv=5, scoring="f1_weighted").mean()), 3),
+                "accuracy": round(float(cross_val_score(xgb_cv, X_dir, y_xgb, cv=tscv, scoring="accuracy").mean()), 3),
+                "f1":       round(float(cross_val_score(xgb_cv, X_dir, y_xgb, cv=tscv, scoring="f1_weighted").mean()), 3),
             }
 
         # ── 5. Neural Network (MLP — LSTM substitute when TF unavailable) ─
@@ -246,8 +252,8 @@ def train_ensemble(stock_code: str, df: pd.DataFrame, force: bool = False) -> di
             early_stopping=True, random_state=42,
         )
         cv_metrics["mlp"] = {
-            "accuracy": round(float(cross_val_score(mlp_cv, X_scaled, y_dir, cv=5, scoring="accuracy").mean()), 3),
-            "f1":       round(float(cross_val_score(mlp_cv, X_scaled, y_dir, cv=5, scoring="f1_weighted").mean()), 3),
+            "accuracy": round(float(cross_val_score(mlp_cv, X_scaled, y_dir, cv=tscv, scoring="accuracy").mean()), 3),
+            "f1":       round(float(cross_val_score(mlp_cv, X_scaled, y_dir, cv=tscv, scoring="f1_weighted").mean()), 3),
         }
 
         # ── 6. GBR price regressor ────────────────────────────────────────
@@ -294,6 +300,213 @@ def train_ensemble(stock_code: str, df: pd.DataFrame, force: bool = False) -> di
         _ensemble_cache[stock_code] = models
         logger.info("Ensemble trained + saved for %s (%d samples, %d features)",
                     stock_code, len(X_dir), len(DIRECTION_FEATURES))
+        return models
+
+
+# ── Hyperparameter tuning (Optuna) ───────────────────────────────────────────
+
+try:
+    import optuna
+    optuna.logging.set_verbosity(optuna.logging.WARNING)
+    OPTUNA_AVAILABLE = True
+except ImportError:
+    OPTUNA_AVAILABLE = False
+    logger.warning("Optuna not installed — hyperparameter tuning disabled. pip install optuna")
+
+
+def tune_ensemble(stock_code: str, df: pd.DataFrame, n_trials: int = 20) -> dict:
+    """
+    Run Optuna HPO for each direction classifier, then retrain with best params.
+    Uses TimeSeriesSplit(n_splits=3) inside each trial for speed.
+    Returns the updated models dict (also updates the in-memory + disk cache).
+    """
+    if not OPTUNA_AVAILABLE:
+        raise RuntimeError("Optuna is not installed. Run: pip install optuna")
+
+    lock = _get_lock(stock_code)
+    with lock:
+        X, y, data_from, data_to = _direction_dataset(df)
+        if len(X) < 80:
+            raise ValueError(f"Not enough data for {stock_code}")
+
+        tscv3 = TimeSeriesSplit(n_splits=3)
+        best_params: dict = {}
+
+        # ── RF ────────────────────────────────────────────────────────────────
+        def rf_objective(trial):
+            clf = RandomForestClassifier(
+                n_estimators=trial.suggest_int("n_estimators", 100, 500),
+                max_depth=trial.suggest_int("max_depth", 4, 10),
+                min_samples_split=trial.suggest_int("min_samples_split", 5, 30),
+                max_features=trial.suggest_categorical("max_features", ["sqrt", "log2", 0.5, 0.7]),
+                class_weight="balanced", random_state=42, n_jobs=-1,
+            )
+            return cross_val_score(clf, X, y, cv=tscv3, scoring="f1_weighted").mean()
+
+        study_rf = optuna.create_study(direction="maximize")
+        study_rf.optimize(rf_objective, n_trials=n_trials, show_progress_bar=False)
+        best_params["rf"] = study_rf.best_params
+        logger.info("RF best params for %s: %s (f1=%.3f)", stock_code, study_rf.best_params, study_rf.best_value)
+
+        # ── ET ────────────────────────────────────────────────────────────────
+        def et_objective(trial):
+            clf = ExtraTreesClassifier(
+                n_estimators=trial.suggest_int("n_estimators", 100, 500),
+                max_depth=trial.suggest_int("max_depth", 4, 10),
+                max_features=trial.suggest_categorical("max_features", ["sqrt", "log2", 0.5, 0.7]),
+                class_weight="balanced", random_state=7, n_jobs=-1,
+            )
+            return cross_val_score(clf, X, y, cv=tscv3, scoring="f1_weighted").mean()
+
+        study_et = optuna.create_study(direction="maximize")
+        study_et.optimize(et_objective, n_trials=n_trials, show_progress_bar=False)
+        best_params["et"] = study_et.best_params
+        logger.info("ET best params for %s: %s (f1=%.3f)", stock_code, study_et.best_params, study_et.best_value)
+
+        # ── GBC ───────────────────────────────────────────────────────────────
+        def gbc_objective(trial):
+            clf = GradientBoostingClassifier(
+                n_estimators=trial.suggest_int("n_estimators", 100, 300),
+                max_depth=trial.suggest_int("max_depth", 3, 6),
+                learning_rate=trial.suggest_float("learning_rate", 0.01, 0.2, log=True),
+                subsample=trial.suggest_float("subsample", 0.6, 1.0),
+                random_state=42,
+            )
+            return cross_val_score(clf, X, y, cv=tscv3, scoring="f1_weighted").mean()
+
+        study_gbc = optuna.create_study(direction="maximize")
+        study_gbc.optimize(gbc_objective, n_trials=n_trials, show_progress_bar=False)
+        best_params["gbc"] = study_gbc.best_params
+        logger.info("GBC best params for %s: %s (f1=%.3f)", stock_code, study_gbc.best_params, study_gbc.best_value)
+
+        # ── XGBoost ───────────────────────────────────────────────────────────
+        if XGB_AVAILABLE:
+            y_xgb = y + 1
+            def xgb_objective(trial):
+                clf = XGBClassifier(
+                    n_estimators=trial.suggest_int("n_estimators", 100, 400),
+                    max_depth=trial.suggest_int("max_depth", 3, 7),
+                    learning_rate=trial.suggest_float("learning_rate", 0.01, 0.2, log=True),
+                    subsample=trial.suggest_float("subsample", 0.6, 1.0),
+                    colsample_bytree=trial.suggest_float("colsample_bytree", 0.6, 1.0),
+                    objective="multi:softprob", num_class=3,
+                    eval_metric="mlogloss", random_state=42, n_jobs=-1, verbosity=0,
+                )
+                return cross_val_score(clf, X, y_xgb, cv=tscv3, scoring="f1_weighted").mean()
+
+            study_xgb = optuna.create_study(direction="maximize")
+            study_xgb.optimize(xgb_objective, n_trials=n_trials, show_progress_bar=False)
+            best_params["xgb"] = study_xgb.best_params
+            logger.info("XGB best params for %s: %s (f1=%.3f)", stock_code, study_xgb.best_params, study_xgb.best_value)
+
+        # ── MLP ───────────────────────────────────────────────────────────────
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+
+        def mlp_objective(trial):
+            n_layers = trial.suggest_int("n_layers", 2, 3)
+            sizes = tuple(
+                trial.suggest_categorical(f"layer_{i}", [32, 64, 128, 256])
+                for i in range(n_layers)
+            )
+            clf = MLPClassifier(
+                hidden_layer_sizes=sizes,
+                alpha=trial.suggest_float("alpha", 1e-4, 0.05, log=True),
+                activation="relu", solver="adam", learning_rate="adaptive",
+                max_iter=300, early_stopping=True, random_state=42,
+            )
+            return cross_val_score(clf, X_scaled, y, cv=tscv3, scoring="f1_weighted").mean()
+
+        study_mlp = optuna.create_study(direction="maximize")
+        study_mlp.optimize(mlp_objective, n_trials=n_trials, show_progress_bar=False)
+        best_params["mlp"] = study_mlp.best_params
+        logger.info("MLP best params for %s: %s (f1=%.3f)", stock_code, study_mlp.best_params, study_mlp.best_value)
+
+        # ── Retrain with best params ──────────────────────────────────────────
+        logger.info("Retraining %s with tuned hyperparameters …", stock_code)
+
+        p = best_params["rf"]
+        rf = RandomForestClassifier(
+            **{k: v for k, v in p.items()},
+            class_weight="balanced", random_state=42, n_jobs=-1,
+        ).fit(X, y)
+
+        p = best_params["et"]
+        et = ExtraTreesClassifier(
+            **{k: v for k, v in p.items()},
+            class_weight="balanced", random_state=7, n_jobs=-1,
+        ).fit(X, y)
+
+        p = best_params["gbc"]
+        gbc = GradientBoostingClassifier(**{k: v for k, v in p.items()}, random_state=42).fit(X, y)
+
+        models: dict = {"rf": rf, "et": et, "gbc": gbc}
+
+        if XGB_AVAILABLE:
+            p = best_params["xgb"]
+            xgb = XGBClassifier(
+                **{k: v for k, v in p.items()},
+                objective="multi:softprob", num_class=3,
+                eval_metric="mlogloss", random_state=42, n_jobs=-1, verbosity=0,
+            ).fit(X, y + 1)
+            models["xgb"] = xgb
+
+        p = best_params["mlp"]
+        n_layers = p["n_layers"]
+        sizes = tuple(p[f"layer_{i}"] for i in range(n_layers))
+        mlp = MLPClassifier(
+            hidden_layer_sizes=sizes,
+            alpha=p["alpha"],
+            activation="relu", solver="adam", learning_rate="adaptive",
+            max_iter=500, early_stopping=True, validation_fraction=0.1,
+            n_iter_no_change=20, random_state=42,
+        ).fit(X_scaled, y)
+        models["mlp"] = mlp
+        models["mlp_scaler"] = scaler
+
+        # ── Carry over GBR from existing cache ────────────────────────────────
+        existing = _ensemble_cache.get(stock_code, {})
+        if "gbr" in existing:
+            models["gbr"] = existing["gbr"]
+
+        # ── Update metadata ───────────────────────────────────────────────────
+        importances  = dict(zip(DIRECTION_FEATURES, [round(float(v), 4) for v in rf.feature_importances_]))
+        top_features = dict(sorted(importances.items(), key=lambda x: x[1], reverse=True)[:10])
+
+        tscv5 = TimeSeriesSplit(n_splits=5)
+        cv_metrics: dict = {}
+        for key, clf_model, Xdata, ydata in [
+            ("rf",  rf,  X,        y),
+            ("et",  et,  X,        y),
+            ("gbc", gbc, X,        y),
+        ]:
+            cv_metrics[key] = {
+                "accuracy": round(float(cross_val_score(clf_model, Xdata, ydata, cv=tscv5, scoring="accuracy").mean()), 3),
+                "f1":       round(float(cross_val_score(clf_model, Xdata, ydata, cv=tscv5, scoring="f1_weighted").mean()), 3),
+            }
+        if XGB_AVAILABLE and "xgb" in models:
+            cv_metrics["xgb"] = {
+                "accuracy": round(float(cross_val_score(models["xgb"], X, y + 1, cv=tscv5, scoring="accuracy").mean()), 3),
+                "f1":       round(float(cross_val_score(models["xgb"], X, y + 1, cv=tscv5, scoring="f1_weighted").mean()), 3),
+            }
+        cv_metrics["mlp"] = {
+            "accuracy": round(float(cross_val_score(mlp, X_scaled, y, cv=tscv5, scoring="accuracy").mean()), 3),
+            "f1":       round(float(cross_val_score(mlp, X_scaled, y, cv=tscv5, scoring="f1_weighted").mean()), 3),
+        }
+
+        from services.model_store import load_metadata
+        meta = load_metadata(stock_code) or {}
+        meta.update({
+            "tuned_params":  best_params,
+            "tuned_at":      datetime.now(timezone.utc).isoformat(),
+            "cv_metrics":    cv_metrics,
+            "top_features":  top_features,
+            "feature_importances": importances,
+        })
+        save_models(stock_code, models)
+        save_metadata(stock_code, meta)
+        _ensemble_cache[stock_code] = models
+        logger.info("Tuning complete for %s", stock_code)
         return models
 
 
@@ -354,14 +567,17 @@ def predict_ensemble(stock_code: str, df: pd.DataFrame, current_price: float) ->
     if not votes:
         raise ValueError("No models available.")
 
+    # Soft vote: decide on averaged probabilities, not per-model hard labels
+    avg_pu = float(np.mean([v[2] for v in votes]))
+    avg_pd = float(np.mean([v[3] for v in votes]))
+    winning = _signal(avg_pu, avg_pd)
+
+    # Agreement: how many models independently agree with the soft-vote winner
     signals   = [v[1] for v in votes]
     counts    = {s: signals.count(s) for s in ("BUY", "SELL", "HOLD")}
-    winning   = max(counts, key=counts.__getitem__)
     agreement = round(counts[winning] / len(votes) * 100, 1)
 
-    avg_pu    = float(np.mean([v[2] for v in votes]))
-    avg_pd    = float(np.mean([v[3] for v in votes]))
-    composite = avg_pu - avg_pd
+    composite  = avg_pu - avg_pd
     confidence = round(min(99.0, abs(composite) * 60 + (agreement / 100) * 30 + 10), 1)
 
     # Price predictions
@@ -378,10 +594,13 @@ def predict_ensemble(stock_code: str, df: pd.DataFrame, current_price: float) ->
         if price_preds else current_price
     price_change_pct = round((predicted_price - current_price) / current_price * 100, 2)
 
+    atr_val = float(df["atr"].dropna().iloc[-1]) if "atr" in df.columns and not df["atr"].dropna().empty else current_price * 0.015
     if winning == "BUY":
-        target, stop_loss = round(current_price * 1.025, 2), round(current_price * 0.985, 2)
+        target    = round(current_price + 2.0 * atr_val, 2)
+        stop_loss = round(current_price - 1.5 * atr_val, 2)
     elif winning == "SELL":
-        target, stop_loss = round(current_price * 0.975, 2), round(current_price * 1.015, 2)
+        target    = round(current_price - 2.0 * atr_val, 2)
+        stop_loss = round(current_price + 1.5 * atr_val, 2)
     else:
         target = stop_loss = current_price
 

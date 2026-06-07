@@ -55,6 +55,12 @@ def add_indicators(df: pd.DataFrame) -> pd.DataFrame:
     df["obv"]           = ta.volume.on_balance_volume(close, vol)
     df["vol_sma_20"]    = ta.trend.sma_indicator(vol, window=20)
     df["vol_sma_ratio"] = vol / df["vol_sma_20"].replace(0, float("nan"))
+    obv_sma20            = df["obv"].rolling(20).mean()
+    _inf                 = float("nan")
+    df["obv_roc5"]       = df["obv"].pct_change(5).replace([float("inf"), -float("inf")], _inf)
+    df["obv_sma_ratio"]  = (
+        df["obv"] / obv_sma20.replace(0, float("nan"))
+    ).replace([float("inf"), -float("inf")], _inf)
 
     # ── Price returns ──────────────────────────────────────────────────────
     df["return_1d"]         = close.pct_change(1)

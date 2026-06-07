@@ -8,6 +8,7 @@ venv/
 dist/
 build/
 logs/
+backend/logs/
 
 *.log
 
@@ -24,6 +25,9 @@ frontend/.vite/
 *.joblib
 *.h5
 *.keras
+
+# Claude Code
+.claude/
 
 # macOS
 .DS_Store
