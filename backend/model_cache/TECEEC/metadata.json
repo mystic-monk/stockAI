@@ -1,0 +1,70 @@
+{
+  "stock_code": "TECEEC",
+  "trained_at": "2026-04-17T22:24:13.059413+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.26,
+      "f1": 0.197
+    },
+    "et": {
+      "accuracy": 0.224,
+      "f1": 0.186
+    },
+    "gbc": {
+      "accuracy": 0.302,
+      "f1": 0.26
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 35.37,
+    "mae": 26.68,
+    "r2": 0.547
+  },
+  "top_features": {
+    "high_low_range": 0.073,
+    "stoch_k": 0.0729,
+    "vol_sma_ratio": 0.0627,
+    "price_momentum_5": 0.0601,
+    "sma_200": 0.0556,
+    "stoch_d": 0.0547,
+    "atr": 0.0533,
+    "bb_lower": 0.0492,
+    "ema_26": 0.0468,
+    "rsi": 0.0457
+  },
+  "feature_importances": {
+    "rsi": 0.0457,
+    "macd": 0.0295,
+    "macd_signal": 0.0384,
+    "macd_hist": 0.0455,
+    "sma_20": 0.0385,
+    "sma_50": 0.0361,
+    "sma_200": 0.0556,
+    "ema_12": 0.0414,
+    "ema_26": 0.0468,
+    "bb_upper": 0.0375,
+    "bb_lower": 0.0492,
+    "bb_pct": 0.0404,
+    "atr": 0.0533,
+    "stoch_k": 0.0729,
+    "stoch_d": 0.0547,
+    "vol_sma_ratio": 0.0627,
+    "price_momentum_5": 0.0601,
+    "price_momentum_10": 0.0397,
+    "close_vs_sma20": 0.0444,
+    "close_vs_sma50": 0.0346,
+    "high_low_range": 0.073
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

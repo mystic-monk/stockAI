@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { createChart, CrosshairMode } from 'lightweight-charts'
+import { createChart, CrosshairMode, LineSeries } from 'lightweight-charts'
 
 export default function RsiChart({ series = [], height = 160 }) {
   const containerRef = useRef(null)
@@ -7,7 +7,6 @@ export default function RsiChart({ series = [], height = 160 }) {
 
   useEffect(() => {
     if (!containerRef.current || !series || series.length === 0) return
-    // Cleanup any previous chart instance before creating a new one
     if (chartRef.current) { chartRef.current.remove(); chartRef.current = null }
 
     const chart = createChart(containerRef.current, {
@@ -26,11 +25,11 @@ export default function RsiChart({ series = [], height = 160 }) {
       value: d.value,
     })).filter((d) => d.time && !isNaN(d.value)).sort((a, b) => a.time - b.time)
 
-    const rsiLine = chart.addLineSeries({ color: '#a78bfa', lineWidth: 2, priceLineVisible: false, lastValueVisible: true })
+    const rsiLine = chart.addSeries(LineSeries, { color: '#a78bfa', lineWidth: 2, priceLineVisible: false, lastValueVisible: true })
     if (lineData.length) rsiLine.setData(lineData)
 
     const addRef = (value, color) => {
-      const s = chart.addLineSeries({ color, lineWidth: 1, lineStyle: 2, priceLineVisible: false, lastValueVisible: false })
+      const s = chart.addSeries(LineSeries, { color, lineWidth: 1, lineStyle: 2, priceLineVisible: false, lastValueVisible: false })
       if (lineData.length) s.setData(lineData.map((d) => ({ time: d.time, value })))
     }
     addRef(70, 'rgba(244,63,94,0.5)')

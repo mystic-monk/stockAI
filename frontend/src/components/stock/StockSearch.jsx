@@ -10,7 +10,7 @@ export default function StockSearch() {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 
-  const { setSelectedStock, addToWatchlist } = useStore()
+  const { setSelectedStock, addToWatchlist, setActiveTab } = useStore()
 
   useEffect(() => {
     stocksApi.getPopular().then((d) => setPopular(d.stocks || []))
@@ -34,6 +34,7 @@ export default function StockSearch() {
   const select = (stock) => {
     setSelectedStock(stock)
     addToWatchlist(stock)
+    setActiveTab('analysis')
     setQuery('')
     setOpen(false)
   }

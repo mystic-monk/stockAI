@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { createChart, CrosshairMode } from 'lightweight-charts'
+import { createChart, CrosshairMode, LineSeries, HistogramSeries } from 'lightweight-charts'
 
 export default function MacdChart({ series = {}, height = 160 }) {
   const containerRef = useRef(null)
@@ -29,14 +29,14 @@ export default function MacdChart({ series = {}, height = 160 }) {
     const histData = toLine(series?.macd_hist).map((d) => ({
       ...d, color: d.value >= 0 ? 'rgba(0,210,106,0.6)' : 'rgba(244,63,94,0.6)',
     }))
-    const hist = chart.addHistogramSeries({ priceScaleId: 'right' })
+    const hist = chart.addSeries(HistogramSeries, { priceScaleId: 'right' })
     if (histData.length) hist.setData(histData)
 
-    const macdLine = chart.addLineSeries({ color: '#3b82f6', lineWidth: 2, priceLineVisible: false, lastValueVisible: true })
+    const macdLine = chart.addSeries(LineSeries, { color: '#3b82f6', lineWidth: 2, priceLineVisible: false, lastValueVisible: true })
     const macdData = toLine(series?.macd)
     if (macdData.length) macdLine.setData(macdData)
 
-    const signalLine = chart.addLineSeries({ color: '#f59e0b', lineWidth: 1, lineStyle: 2, priceLineVisible: false, lastValueVisible: true })
+    const signalLine = chart.addSeries(LineSeries, { color: '#f59e0b', lineWidth: 1, lineStyle: 2, priceLineVisible: false, lastValueVisible: true })
     const signalData = toLine(series?.macd_signal)
     if (signalData.length) signalLine.setData(signalData)
 

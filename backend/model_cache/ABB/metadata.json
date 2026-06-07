@@ -1,0 +1,89 @@
+{
+  "stock_code": "ABB",
+  "trained_at": "2026-04-18T14:50:29.272311+00:00",
+  "n_samples": 134,
+  "n_features": 33,
+  "data_from": "2025-09-23",
+  "data_to": "2026-04-09",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.328,
+      "f1": 0.282
+    },
+    "et": {
+      "accuracy": 0.321,
+      "f1": 0.262
+    },
+    "gbc": {
+      "accuracy": 0.351,
+      "f1": 0.298
+    },
+    "mlp": {
+      "accuracy": 0.433,
+      "f1": 0.339
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 342.91,
+    "mae": 235.91,
+    "r2": -0.115
+  },
+  "top_features": {
+    "macd_hist_lag3": 0.0895,
+    "atr": 0.0763,
+    "macd_signal": 0.061,
+    "macd_hist_lag1": 0.0506,
+    "sma50_slope": 0.0482,
+    "macd": 0.0464,
+    "close_vs_sma50": 0.0458,
+    "macd_hist": 0.0418,
+    "rsi_lag1": 0.038,
+    "high_low_range": 0.0351
+  },
+  "feature_importances": {
+    "rsi": 0.0262,
+    "rsi_lag1": 0.038,
+    "rsi_lag3": 0.0298,
+    "rsi_ma5": 0.0308,
+    "macd": 0.0464,
+    "macd_signal": 0.061,
+    "macd_hist": 0.0418,
+    "macd_hist_lag1": 0.0506,
+    "macd_hist_lag3": 0.0895,
+    "close_vs_sma20": 0.0218,
+    "close_vs_sma50": 0.0458,
+    "close_vs_sma200": 0.029,
+    "above_sma20": 0.0008,
+    "above_sma50": 0.0006,
+    "above_sma200": 0.0102,
+    "sma20_slope": 0.0213,
+    "sma50_slope": 0.0482,
+    "stoch_k": 0.0212,
+    "stoch_d": 0.0295,
+    "bb_pct": 0.0284,
+    "return_1d": 0.0153,
+    "return_lag1": 0.019,
+    "return_lag2": 0.0236,
+    "return_3d": 0.0192,
+    "price_momentum_5": 0.0267,
+    "price_momentum_10": 0.0285,
+    "atr": 0.0763,
+    "high_low_range": 0.0351,
+    "vol_sma_ratio": 0.0138,
+    "vol_ratio_lag1": 0.0112,
+    "body_pct": 0.0215,
+    "upper_wick": 0.0224,
+    "lower_wick": 0.0165
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

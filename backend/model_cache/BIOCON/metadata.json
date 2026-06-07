@@ -1,0 +1,70 @@
+{
+  "stock_code": "BIOCON",
+  "trained_at": "2026-04-17T22:26:17.741398+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.367,
+      "f1": 0.315
+    },
+    "et": {
+      "accuracy": 0.353,
+      "f1": 0.307
+    },
+    "gbc": {
+      "accuracy": 0.354,
+      "f1": 0.29
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 6.96,
+    "mae": 5.56,
+    "r2": 0.805
+  },
+  "top_features": {
+    "stoch_d": 0.069,
+    "macd_hist": 0.0643,
+    "price_momentum_5": 0.059,
+    "vol_sma_ratio": 0.0576,
+    "sma_200": 0.0566,
+    "stoch_k": 0.0558,
+    "price_momentum_10": 0.0552,
+    "high_low_range": 0.0534,
+    "sma_50": 0.0533,
+    "bb_upper": 0.0457
+  },
+  "feature_importances": {
+    "rsi": 0.0448,
+    "macd": 0.0335,
+    "macd_signal": 0.0319,
+    "macd_hist": 0.0643,
+    "sma_20": 0.0406,
+    "sma_50": 0.0533,
+    "sma_200": 0.0566,
+    "ema_12": 0.0403,
+    "ema_26": 0.0402,
+    "bb_upper": 0.0457,
+    "bb_lower": 0.035,
+    "bb_pct": 0.0443,
+    "atr": 0.0445,
+    "stoch_k": 0.0558,
+    "stoch_d": 0.069,
+    "vol_sma_ratio": 0.0576,
+    "price_momentum_5": 0.059,
+    "price_momentum_10": 0.0552,
+    "close_vs_sma20": 0.0382,
+    "close_vs_sma50": 0.0369,
+    "high_low_range": 0.0534
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

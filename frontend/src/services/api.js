@@ -24,6 +24,8 @@ export const stocksApi = {
     api.get('/stocks/indicators', { params: { stock_code: stockCode, exchange_code: exchangeCode } }),
   getPeer: (stockCode) =>
     api.get('/stocks/peer', { params: { stock_code: stockCode } }),
+  getPeers: (stockCode, maxPeers = 4) =>
+    api.get('/stocks/peers', { params: { stock_code: stockCode, max_peers: maxPeers } }),
 }
 
 // ── Predictions ──────────────────────────────────────────────────────────────
@@ -37,4 +39,21 @@ export const portfolioApi = {
   getPortfolio: () => api.get('/portfolio/'),
   placeTrade: (order) => api.post('/portfolio/trade', order),
   resetPortfolio: () => api.delete('/portfolio/reset'),
+  getPortfolioPredictions: () => api.get('/portfolio/predictions', { timeout: 300000 }),
+}
+
+// ── Auth ─────────────────────────────────────────────────────────────────────
+export const authApi = {
+  status: () => api.get('/auth/status'),
+  updateSession: (token) => api.post('/auth/session', { session_token: token }),
+}
+
+// ── Models ───────────────────────────────────────────────────────────────────
+export const modelsApi = {
+  getStatus: () => api.get('/models/status'),
+  getStockStatus: (stockCode) => api.get(`/models/status/${stockCode}`),
+  retrain: (stockCode, exchangeCode = 'NSE') =>
+    api.post(`/models/${stockCode}/retrain`, null, { params: { exchange_code: exchangeCode } }),
+  deleteModel: (stockCode) => api.delete(`/models/${stockCode}`),
+  deleteAll: () => api.delete('/models/'),
 }

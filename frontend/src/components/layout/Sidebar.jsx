@@ -1,26 +1,31 @@
-import { Bookmark, BookmarkX, RefreshCw } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { BookmarkX } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import { stocksApi } from '../../services/api'
 import useStore from '../../store/useStore'
 
-function WatchlistItem({ stock, isActive, onClick, onRemove }) {
-  const [quote, setQuote] = useState(null)
+// Single batch poll for all watchlist quotes — one interval, not N
+function useWatchlistQuotes(watchlist) {
+  const [quotes, setQuotes] = useState({})
+
+  const fetchAll = (list) => {
+    list.forEach(stock => {
+      stocksApi.getQuote(stock.stock_code).then(q => {
+        setQuotes(prev => ({ ...prev, [stock.stock_code]: q }))
+      }).catch(() => {})
+    })
+  }
 
   useEffect(() => {
-    let cancelled = false
-    stocksApi.getQuote(stock.stock_code).then((q) => {
-      if (!cancelled) setQuote(q)
-    }).catch(() => {})
+    if (!watchlist.length) return
+    fetchAll(watchlist)
+    const id = setInterval(() => fetchAll(watchlist), 60000) // 60s, not 30s per item
+    return () => clearInterval(id)
+  }, [watchlist.map(s => s.stock_code).join(',')])
 
-    const interval = setInterval(() => {
-      stocksApi.getQuote(stock.stock_code).then((q) => {
-        if (!cancelled) setQuote(q)
-      }).catch(() => {})
-    }, 30000)
+  return quotes
+}
 
-    return () => { cancelled = true; clearInterval(interval) }
-  }, [stock.stock_code])
-
+function WatchlistItem({ stock, quote, isActive, onClick, onRemove }) {
   const isPositive = quote ? quote.change_pct >= 0 : null
 
   return (
@@ -57,17 +62,13 @@ function WatchlistItem({ stock, isActive, onClick, onRemove }) {
 }
 
 export default function Sidebar() {
-  const { watchlist, removeFromWatchlist, selectedStock, setSelectedStock, addToWatchlist } = useStore()
-  const [popular, setPopular] = useState([])
+  const { watchlist, removeFromWatchlist, selectedStock, setSelectedStock, addToWatchlist, setActiveTab } = useStore()
+  const quotes = useWatchlistQuotes(watchlist)
 
   useEffect(() => {
-    stocksApi.getPopular().then((d) => {
+    stocksApi.getPopular().then(d => {
       const list = d.stocks || []
-      setPopular(list)
-      // Seed watchlist with 5 defaults if empty
-      if (watchlist.length === 0) {
-        list.slice(0, 5).forEach((s) => addToWatchlist(s))
-      }
+      if (watchlist.length === 0) list.slice(0, 5).forEach(s => addToWatchlist(s))
     })
   }, [])
 
@@ -75,7 +76,7 @@ export default function Sidebar() {
     <aside className="sidebar">
       <div className="sidebar-section-title" style={{ display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'space-between' }}>
         <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <Bookmark size={11} /> Watchlist
+          Watchlist
         </span>
         <span className="muted" style={{ fontSize: 10 }}>{watchlist.length} stocks</span>
       </div>
@@ -84,17 +85,16 @@ export default function Sidebar() {
         {watchlist.length === 0 ? (
           <div className="empty-state" style={{ padding: '30px 20px' }}>
             <div className="empty-state-icon">📋</div>
-            <div className="empty-state-text" style={{ fontSize: 12 }}>
-              Search a stock to add it here
-            </div>
+            <div className="empty-state-text" style={{ fontSize: 12 }}>Search a stock to add it here</div>
           </div>
         ) : (
-          watchlist.map((stock) => (
+          watchlist.map(stock => (
             <WatchlistItem
               key={stock.stock_code}
               stock={stock}
+              quote={quotes[stock.stock_code] || null}
               isActive={selectedStock?.stock_code === stock.stock_code}
-              onClick={() => setSelectedStock(stock)}
+              onClick={() => { setSelectedStock(stock); setActiveTab('analysis') }}
               onRemove={removeFromWatchlist}
             />
           ))

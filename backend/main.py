@@ -45,27 +45,46 @@ app.add_middleware(
 )
 
 # ── Routes ────────────────────────────────────────────────────────────────────
-from api.routes import portfolio, predictions, stocks  # noqa: E402
+from api.routes import auth, models, portfolio, predictions, stocks  # noqa: E402
 
 app.include_router(stocks.router,      prefix="/api/stocks",      tags=["Stocks"])
 app.include_router(predictions.router, prefix="/api/predictions",  tags=["Predictions"])
 app.include_router(portfolio.router,   prefix="/api/portfolio",    tags=["Portfolio"])
+app.include_router(models.router,      prefix="/api/models",       tags=["Models"])
+app.include_router(auth.router,        prefix="/api/auth",         tags=["Auth"])
 
 
-# ── Health & Root ─────────────────────────────────────────────────────────────
-@app.get("/", tags=["Health"])
-async def root():
-    return {
-        "name":    "StockAI API",
-        "version": "1.0.0",
-        "status":  "running",
-        "docs":    "/docs",
-    }
-
-
+# ── Health ────────────────────────────────────────────────────────────────────
 @app.get("/health", tags=["Health"])
 async def health():
     return {"status": "healthy"}
+
+
+# ── Serve React frontend (production build) ───────────────────────────────────
+import os
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+_DIST = Path(__file__).parent.parent / "frontend" / "dist"
+
+if _DIST.exists():
+    app.mount("/assets", StaticFiles(directory=_DIST / "assets"), name="assets")
+
+    @app.get("/", include_in_schema=False)
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def serve_spa(full_path: str = ""):
+        # Let /api/* and /docs pass through to FastAPI handlers above
+        if full_path.startswith(("api/", "docs", "redoc", "openapi", "health")):
+            from fastapi import HTTPException
+            raise HTTPException(status_code=404)
+        index = _DIST / "index.html"
+        return FileResponse(index) if index.exists() else {"error": "Frontend not built"}
+else:
+    @app.get("/", tags=["Health"])
+    async def root():
+        return {"name": "StockAI API", "version": "1.0.0", "status": "running",
+                "note": "Frontend not built — run: cd frontend && npm run build"}
 
 
 # ── Dev entrypoint ────────────────────────────────────────────────────────────

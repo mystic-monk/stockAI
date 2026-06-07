@@ -1,0 +1,70 @@
+{
+  "stock_code": "THERMA",
+  "trained_at": "2026-04-17T22:20:10.855327+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.238,
+      "f1": 0.188
+    },
+    "et": {
+      "accuracy": 0.231,
+      "f1": 0.181
+    },
+    "gbc": {
+      "accuracy": 0.245,
+      "f1": 0.222
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 150.51,
+    "mae": 105.07,
+    "r2": 0.743
+  },
+  "top_features": {
+    "high_low_range": 0.1285,
+    "price_momentum_5": 0.0689,
+    "stoch_d": 0.0554,
+    "vol_sma_ratio": 0.0525,
+    "macd_hist": 0.0508,
+    "bb_upper": 0.0503,
+    "sma_20": 0.0489,
+    "sma_200": 0.0461,
+    "atr": 0.0449,
+    "close_vs_sma50": 0.0428
+  },
+  "feature_importances": {
+    "rsi": 0.0338,
+    "macd": 0.0351,
+    "macd_signal": 0.0338,
+    "macd_hist": 0.0508,
+    "sma_20": 0.0489,
+    "sma_50": 0.0366,
+    "sma_200": 0.0461,
+    "ema_12": 0.0382,
+    "ema_26": 0.0378,
+    "bb_upper": 0.0503,
+    "bb_lower": 0.0396,
+    "bb_pct": 0.0398,
+    "atr": 0.0449,
+    "stoch_k": 0.0391,
+    "stoch_d": 0.0554,
+    "vol_sma_ratio": 0.0525,
+    "price_momentum_5": 0.0689,
+    "price_momentum_10": 0.0369,
+    "close_vs_sma20": 0.0401,
+    "close_vs_sma50": 0.0428,
+    "high_low_range": 0.1285
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

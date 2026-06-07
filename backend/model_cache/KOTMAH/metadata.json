@@ -1,0 +1,70 @@
+{
+  "stock_code": "KOTMAH",
+  "trained_at": "2026-04-17T22:15:37.939530+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.224,
+      "f1": 0.135
+    },
+    "et": {
+      "accuracy": 0.231,
+      "f1": 0.162
+    },
+    "gbc": {
+      "accuracy": 0.253,
+      "f1": 0.192
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 448.99,
+    "mae": 387.08,
+    "r2": -298.895
+  },
+  "top_features": {
+    "high_low_range": 0.1028,
+    "atr": 0.0677,
+    "macd_signal": 0.0625,
+    "bb_lower": 0.0559,
+    "sma_20": 0.0552,
+    "ema_12": 0.0544,
+    "sma_200": 0.0501,
+    "vol_sma_ratio": 0.0487,
+    "bb_upper": 0.0485,
+    "macd": 0.0483
+  },
+  "feature_importances": {
+    "rsi": 0.0343,
+    "macd": 0.0483,
+    "macd_signal": 0.0625,
+    "macd_hist": 0.0299,
+    "sma_20": 0.0552,
+    "sma_50": 0.0416,
+    "sma_200": 0.0501,
+    "ema_12": 0.0544,
+    "ema_26": 0.045,
+    "bb_upper": 0.0485,
+    "bb_lower": 0.0559,
+    "bb_pct": 0.0313,
+    "atr": 0.0677,
+    "stoch_k": 0.0416,
+    "stoch_d": 0.0333,
+    "vol_sma_ratio": 0.0487,
+    "price_momentum_5": 0.0416,
+    "price_momentum_10": 0.0343,
+    "close_vs_sma20": 0.0302,
+    "close_vs_sma50": 0.0429,
+    "high_low_range": 0.1028
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

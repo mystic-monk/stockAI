@@ -1,0 +1,70 @@
+{
+  "stock_code": "MARUTI",
+  "trained_at": "2026-04-17T22:14:07.466415+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.224,
+      "f1": 0.169
+    },
+    "et": {
+      "accuracy": 0.224,
+      "f1": 0.178
+    },
+    "gbc": {
+      "accuracy": 0.231,
+      "f1": 0.199
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 899.68,
+    "mae": 727.49,
+    "r2": 0.266
+  },
+  "top_features": {
+    "vol_sma_ratio": 0.0698,
+    "bb_upper": 0.0644,
+    "stoch_k": 0.06,
+    "price_momentum_5": 0.0594,
+    "sma_50": 0.0569,
+    "atr": 0.0544,
+    "sma_200": 0.0534,
+    "sma_20": 0.0519,
+    "macd_hist": 0.0511,
+    "stoch_d": 0.0462
+  },
+  "feature_importances": {
+    "rsi": 0.0402,
+    "macd": 0.0358,
+    "macd_signal": 0.0338,
+    "macd_hist": 0.0511,
+    "sma_20": 0.0519,
+    "sma_50": 0.0569,
+    "sma_200": 0.0534,
+    "ema_12": 0.0362,
+    "ema_26": 0.045,
+    "bb_upper": 0.0644,
+    "bb_lower": 0.0378,
+    "bb_pct": 0.0404,
+    "atr": 0.0544,
+    "stoch_k": 0.06,
+    "stoch_d": 0.0462,
+    "vol_sma_ratio": 0.0698,
+    "price_momentum_5": 0.0594,
+    "price_momentum_10": 0.0399,
+    "close_vs_sma20": 0.0425,
+    "close_vs_sma50": 0.0348,
+    "high_low_range": 0.046
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

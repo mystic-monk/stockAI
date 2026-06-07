@@ -1,0 +1,70 @@
+{
+  "stock_code": "WIPRO",
+  "trained_at": "2026-04-17T22:24:03.529233+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.217,
+      "f1": 0.16
+    },
+    "et": {
+      "accuracy": 0.21,
+      "f1": 0.134
+    },
+    "gbc": {
+      "accuracy": 0.21,
+      "f1": 0.17
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 40.94,
+    "mae": 39.12,
+    "r2": -15.148
+  },
+  "top_features": {
+    "atr": 0.0799,
+    "high_low_range": 0.0786,
+    "bb_lower": 0.0587,
+    "stoch_k": 0.058,
+    "vol_sma_ratio": 0.0557,
+    "close_vs_sma50": 0.0506,
+    "macd": 0.0497,
+    "price_momentum_10": 0.0474,
+    "price_momentum_5": 0.0447,
+    "sma_50": 0.0441
+  },
+  "feature_importances": {
+    "rsi": 0.0351,
+    "macd": 0.0497,
+    "macd_signal": 0.0391,
+    "macd_hist": 0.0362,
+    "sma_20": 0.0356,
+    "sma_50": 0.0441,
+    "sma_200": 0.0415,
+    "ema_12": 0.0363,
+    "ema_26": 0.0393,
+    "bb_upper": 0.0441,
+    "bb_lower": 0.0587,
+    "bb_pct": 0.0431,
+    "atr": 0.0799,
+    "stoch_k": 0.058,
+    "stoch_d": 0.0384,
+    "vol_sma_ratio": 0.0557,
+    "price_momentum_5": 0.0447,
+    "price_momentum_10": 0.0474,
+    "close_vs_sma20": 0.0439,
+    "close_vs_sma50": 0.0506,
+    "high_low_range": 0.0786
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

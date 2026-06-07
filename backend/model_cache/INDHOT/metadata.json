@@ -1,0 +1,70 @@
+{
+  "stock_code": "INDHOT",
+  "trained_at": "2026-04-17T22:22:13.187434+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.331,
+      "f1": 0.266
+    },
+    "et": {
+      "accuracy": 0.303,
+      "f1": 0.252
+    },
+    "gbc": {
+      "accuracy": 0.296,
+      "f1": 0.258
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 47.95,
+    "mae": 40.02,
+    "r2": -0.639
+  },
+  "top_features": {
+    "high_low_range": 0.0751,
+    "macd": 0.0663,
+    "vol_sma_ratio": 0.0646,
+    "macd_signal": 0.0561,
+    "bb_upper": 0.0547,
+    "ema_12": 0.053,
+    "close_vs_sma50": 0.0489,
+    "stoch_k": 0.0486,
+    "price_momentum_5": 0.0486,
+    "macd_hist": 0.0474
+  },
+  "feature_importances": {
+    "rsi": 0.0342,
+    "macd": 0.0663,
+    "macd_signal": 0.0561,
+    "macd_hist": 0.0474,
+    "sma_20": 0.0426,
+    "sma_50": 0.0357,
+    "sma_200": 0.044,
+    "ema_12": 0.053,
+    "ema_26": 0.0351,
+    "bb_upper": 0.0547,
+    "bb_lower": 0.0375,
+    "bb_pct": 0.042,
+    "atr": 0.0386,
+    "stoch_k": 0.0486,
+    "stoch_d": 0.0434,
+    "vol_sma_ratio": 0.0646,
+    "price_momentum_5": 0.0486,
+    "price_momentum_10": 0.0415,
+    "close_vs_sma20": 0.0421,
+    "close_vs_sma50": 0.0489,
+    "high_low_range": 0.0751
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

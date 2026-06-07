@@ -1,0 +1,70 @@
+{
+  "stock_code": "SUDCHE",
+  "trained_at": "2026-04-17T22:16:41.855701+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.281,
+      "f1": 0.241
+    },
+    "et": {
+      "accuracy": 0.266,
+      "f1": 0.227
+    },
+    "gbc": {
+      "accuracy": 0.288,
+      "f1": 0.258
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 86.3,
+    "mae": 74.72,
+    "r2": -1.005
+  },
+  "top_features": {
+    "price_momentum_5": 0.0696,
+    "stoch_d": 0.0666,
+    "high_low_range": 0.0618,
+    "sma_200": 0.0614,
+    "vol_sma_ratio": 0.0594,
+    "price_momentum_10": 0.0525,
+    "ema_12": 0.047,
+    "macd_signal": 0.046,
+    "rsi": 0.0447,
+    "stoch_k": 0.0444
+  },
+  "feature_importances": {
+    "rsi": 0.0447,
+    "macd": 0.0424,
+    "macd_signal": 0.046,
+    "macd_hist": 0.0418,
+    "sma_20": 0.0439,
+    "sma_50": 0.038,
+    "sma_200": 0.0614,
+    "ema_12": 0.047,
+    "ema_26": 0.0385,
+    "bb_upper": 0.0375,
+    "bb_lower": 0.0438,
+    "bb_pct": 0.042,
+    "atr": 0.0332,
+    "stoch_k": 0.0444,
+    "stoch_d": 0.0666,
+    "vol_sma_ratio": 0.0594,
+    "price_momentum_5": 0.0696,
+    "price_momentum_10": 0.0525,
+    "close_vs_sma20": 0.0412,
+    "close_vs_sma50": 0.0444,
+    "high_low_range": 0.0618
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

@@ -89,10 +89,14 @@ def get_historical_data(
         logger.error("Breeze history SDK crash for %s: %s", stock_code, e)
         raise ValueError(f"Breeze network/SDK error: {str(e)}")
 
-    if response.get("Status") != 200 or not response.get("Success"):
-        error = response.get("Error", "Unknown error from Breeze API")
+    if response.get("Status") != 200:
+        error = response.get("Error") or "Unknown error from Breeze API"
         logger.error("Breeze API error for %s: %s", stock_code, error)
         raise ValueError(f"Breeze API error: {error}")
+
+    if not response.get("Success"):
+        logger.warning("No data returned by Breeze for %s (empty Success)", stock_code)
+        raise ValueError(f"No historical data available for {stock_code}")
 
     records = response["Success"]
     df = pd.DataFrame(records)

@@ -1,9 +1,17 @@
 import { create } from 'zustand'
 
+const safeParse = (key, fallback) => {
+  try { return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback }
+  catch { localStorage.removeItem(key); return fallback }
+}
+
 const useStore = create((set, get) => ({
   // ── Selected stock ─────────────────────────────────────────────────────
-  selectedStock: null,   // full stock info object
-  setSelectedStock: (stock) => set({ selectedStock: stock, prediction: null }),
+  selectedStock: safeParse('stockai-selected', null),
+  setSelectedStock: (stock) => {
+    localStorage.setItem('stockai-selected', JSON.stringify(stock))
+    set({ selectedStock: stock, prediction: null })
+  },
 
   // ── Quote ──────────────────────────────────────────────────────────────
   quote: null,
@@ -24,11 +32,11 @@ const useStore = create((set, get) => ({
   setIsAnalyzing: (v) => set({ isAnalyzing: v }),
 
   // ── Active tab (Analysis | Portfolio) ─────────────────────────────────
-  activeTab: 'analysis',
+  activeTab: 'portfolio',
   setActiveTab: (tab) => set({ activeTab: tab }),
 
   // ── Watchlist ─────────────────────────────────────────────────────────
-  watchlist: JSON.parse(localStorage.getItem('stockai-watchlist') || '[]'),
+  watchlist: safeParse('stockai-watchlist', []),
   addToWatchlist: (stock) => {
     const list = get().watchlist
     if (!list.find((s) => s.stock_code === stock.stock_code)) {
@@ -44,10 +52,18 @@ const useStore = create((set, get) => ({
   },
 
   // ── Portfolio ─────────────────────────────────────────────────────────
-  portfolio: JSON.parse(localStorage.getItem('stockai-portfolio') || 'null'),
+  portfolio: safeParse('stockai-portfolio', null),
   setPortfolio: (p) => {
     localStorage.setItem('stockai-portfolio', JSON.stringify(p))
     set({ portfolio: p })
+  },
+
+  // ── Portfolio predictions (cached to avoid re-running on every refresh) ─
+  portfolioPredictions: safeParse('stockai-pred-cache', null),
+  setPortfolioPredictions: (data) => {
+    const entry = data ? { data, savedAt: Date.now() } : null
+    localStorage.setItem('stockai-pred-cache', JSON.stringify(entry))
+    set({ portfolioPredictions: entry })
   },
 }))
 

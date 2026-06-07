@@ -1,0 +1,70 @@
+{
+  "stock_code": "HAVIND",
+  "trained_at": "2026-04-17T22:18:34.361991+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.274,
+      "f1": 0.235
+    },
+    "et": {
+      "accuracy": 0.231,
+      "f1": 0.188
+    },
+    "gbc": {
+      "accuracy": 0.245,
+      "f1": 0.202
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 60.42,
+    "mae": 46.08,
+    "r2": 0.323
+  },
+  "top_features": {
+    "macd_signal": 0.0752,
+    "price_momentum_5": 0.0663,
+    "close_vs_sma50": 0.064,
+    "macd": 0.0603,
+    "vol_sma_ratio": 0.0595,
+    "stoch_k": 0.0546,
+    "rsi": 0.0485,
+    "stoch_d": 0.0482,
+    "bb_upper": 0.0467,
+    "high_low_range": 0.0466
+  },
+  "feature_importances": {
+    "rsi": 0.0485,
+    "macd": 0.0603,
+    "macd_signal": 0.0752,
+    "macd_hist": 0.0425,
+    "sma_20": 0.0327,
+    "sma_50": 0.0327,
+    "sma_200": 0.0402,
+    "ema_12": 0.0347,
+    "ema_26": 0.0374,
+    "bb_upper": 0.0467,
+    "bb_lower": 0.0396,
+    "bb_pct": 0.0428,
+    "atr": 0.0396,
+    "stoch_k": 0.0546,
+    "stoch_d": 0.0482,
+    "vol_sma_ratio": 0.0595,
+    "price_momentum_5": 0.0663,
+    "price_momentum_10": 0.0421,
+    "close_vs_sma20": 0.0458,
+    "close_vs_sma50": 0.064,
+    "high_low_range": 0.0466
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

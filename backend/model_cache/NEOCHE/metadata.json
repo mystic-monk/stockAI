@@ -1,0 +1,70 @@
+{
+  "stock_code": "NEOCHE",
+  "trained_at": "2026-04-17T22:16:18.442968+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.152,
+      "f1": 0.111
+    },
+    "et": {
+      "accuracy": 0.152,
+      "f1": 0.114
+    },
+    "gbc": {
+      "accuracy": 0.152,
+      "f1": 0.111
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 61.06,
+    "mae": 47.83,
+    "r2": 0.548
+  },
+  "top_features": {
+    "sma_200": 0.0672,
+    "bb_pct": 0.0611,
+    "sma_50": 0.0605,
+    "price_momentum_5": 0.0547,
+    "bb_upper": 0.0527,
+    "atr": 0.0508,
+    "ema_26": 0.0489,
+    "stoch_d": 0.0484,
+    "high_low_range": 0.0473,
+    "vol_sma_ratio": 0.0466
+  },
+  "feature_importances": {
+    "rsi": 0.0455,
+    "macd": 0.045,
+    "macd_signal": 0.0323,
+    "macd_hist": 0.037,
+    "sma_20": 0.04,
+    "sma_50": 0.0605,
+    "sma_200": 0.0672,
+    "ema_12": 0.0402,
+    "ema_26": 0.0489,
+    "bb_upper": 0.0527,
+    "bb_lower": 0.0455,
+    "bb_pct": 0.0611,
+    "atr": 0.0508,
+    "stoch_k": 0.0451,
+    "stoch_d": 0.0484,
+    "vol_sma_ratio": 0.0466,
+    "price_momentum_5": 0.0547,
+    "price_momentum_10": 0.0459,
+    "close_vs_sma20": 0.0395,
+    "close_vs_sma50": 0.0458,
+    "high_low_range": 0.0473
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

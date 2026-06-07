@@ -1,0 +1,70 @@
+{
+  "stock_code": "TRENT",
+  "trained_at": "2026-04-17T22:27:37.427939+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.324,
+      "f1": 0.271
+    },
+    "et": {
+      "accuracy": 0.245,
+      "f1": 0.203
+    },
+    "gbc": {
+      "accuracy": 0.338,
+      "f1": 0.294
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 229.4,
+    "mae": 170.62,
+    "r2": 0.289
+  },
+  "top_features": {
+    "close_vs_sma50": 0.0864,
+    "high_low_range": 0.0799,
+    "vol_sma_ratio": 0.0599,
+    "rsi": 0.0546,
+    "bb_pct": 0.0514,
+    "close_vs_sma20": 0.0498,
+    "macd_hist": 0.0484,
+    "price_momentum_10": 0.0484,
+    "price_momentum_5": 0.048,
+    "atr": 0.0475
+  },
+  "feature_importances": {
+    "rsi": 0.0546,
+    "macd": 0.0337,
+    "macd_signal": 0.0402,
+    "macd_hist": 0.0484,
+    "sma_20": 0.0431,
+    "sma_50": 0.0354,
+    "sma_200": 0.0363,
+    "ema_12": 0.0395,
+    "ema_26": 0.0405,
+    "bb_upper": 0.0455,
+    "bb_lower": 0.0375,
+    "bb_pct": 0.0514,
+    "atr": 0.0475,
+    "stoch_k": 0.0393,
+    "stoch_d": 0.0349,
+    "vol_sma_ratio": 0.0599,
+    "price_momentum_5": 0.048,
+    "price_momentum_10": 0.0484,
+    "close_vs_sma20": 0.0498,
+    "close_vs_sma50": 0.0864,
+    "high_low_range": 0.0799
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

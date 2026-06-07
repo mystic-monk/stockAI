@@ -1,0 +1,70 @@
+{
+  "stock_code": "HEAGLO",
+  "trained_at": "2026-04-17T22:27:51.931491+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.302,
+      "f1": 0.234
+    },
+    "et": {
+      "accuracy": 0.253,
+      "f1": 0.162
+    },
+    "gbc": {
+      "accuracy": 0.332,
+      "f1": 0.295
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 12.41,
+    "mae": 10.15,
+    "r2": 0.695
+  },
+  "top_features": {
+    "stoch_d": 0.0747,
+    "sma_50": 0.0688,
+    "atr": 0.0674,
+    "price_momentum_10": 0.0669,
+    "macd_hist": 0.0611,
+    "price_momentum_5": 0.0604,
+    "high_low_range": 0.0576,
+    "vol_sma_ratio": 0.0569,
+    "sma_200": 0.0564,
+    "close_vs_sma20": 0.0502
+  },
+  "feature_importances": {
+    "rsi": 0.0374,
+    "macd": 0.0342,
+    "macd_signal": 0.0356,
+    "macd_hist": 0.0611,
+    "sma_20": 0.0333,
+    "sma_50": 0.0688,
+    "sma_200": 0.0564,
+    "ema_12": 0.0327,
+    "ema_26": 0.0286,
+    "bb_upper": 0.0325,
+    "bb_lower": 0.0361,
+    "bb_pct": 0.0384,
+    "atr": 0.0674,
+    "stoch_k": 0.0384,
+    "stoch_d": 0.0747,
+    "vol_sma_ratio": 0.0569,
+    "price_momentum_5": 0.0604,
+    "price_momentum_10": 0.0669,
+    "close_vs_sma20": 0.0502,
+    "close_vs_sma50": 0.0323,
+    "high_low_range": 0.0576
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

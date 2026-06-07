@@ -1,79 +1,116 @@
-# StockAI — ICICIDirect Breeze Intelligence Platform
+# StockAI — Intelligent Market Analysis
 
-AI-powered stock analysis and paper trading using the ICICIDirect Breeze API.
+AI-powered stock analysis and paper trading for NSE stocks via the ICICIDirect Breeze API.
 
-## Stack
-- **Backend**: Python · FastAPI · scikit-learn · TensorFlow LSTM · `ta` indicators
-- **Frontend**: React · Vite · TradingView Lightweight Charts · Zustand · Axios
+## Features
 
----
+| Feature | Details |
+|---|---|
+| **Live quotes** | Real-time price, OHLCV, change % via Breeze API (refreshes every 30s) |
+| **Candlestick charts** | Interactive OHLCV chart with SMA 20/50/200 overlays and AI target price line |
+| **Technical indicators** | RSI, MACD, Bollinger Bands, Stochastic, ATR, OBV, Volume Ratio |
+| **AI Signal** | BUY / SELL / HOLD from a 5-model ML ensemble (Random Forest, Extra Trees, GBM, XGBoost, MLP) |
+| **Decision card** | Instant indicator-based quick signal before AI runs; full AI signal with confidence, price targets, stop-loss after analysis |
+| **Portfolio view** | Live Demat holdings from Breeze API with P&L, inline AI signals, and sector info |
+| **AI Portfolio analysis** | Bulk signal generation for all holdings with 1-hour cache (no repeat on refresh) |
+| **Market Opportunities** | Scan popular stocks not in your portfolio for BUY signals |
+| **Peer comparison** | Normalized % return chart vs sector peers (auto-loaded + manual add) |
+| **Paper trading** | Simulated BUY/SELL orders against a ₹10,00,000 virtual portfolio |
+| **Model monitor** | CV accuracy per model vs 33% random baseline; retrain verdict and one-click retrain |
+| **Session refresh** | Update the Breeze session token from the UI — no server restart needed |
+
+## Architecture
+
+```
+StockApp/
+├── backend/               FastAPI + Python
+│   ├── api/routes/        stocks · predictions · portfolio · models · auth
+│   ├── core/              config (pydantic-settings) · breeze_client singleton
+│   ├── models/            Pydantic schemas
+│   └── services/
+│       ├── data_fetcher.py     Breeze API wrapper, TTL caches
+│       ├── feature_engineering.py  33 technical + lag features
+│       ├── ml_ensemble.py      5-model ensemble, CV metrics, model persistence
+│       ├── ml_models.py        Single-stock RF + MLP predictor
+│       ├── predictor.py        Signal generation pipeline
+│       └── model_store.py      Disk persistence + metadata for trained models
+└── frontend/              React + Vite
+    └── src/
+        ├── pages/          AnalysisPage · PortfolioPage · ModelMonitorPage
+        ├── components/
+        │   ├── charts/     CandlestickChart · VolumeChart · RsiChart · MacdChart
+        │   │               (lightweight-charts v5 API)
+        │   ├── analysis/   ComparisonPanel
+        │   ├── portfolio/  PortfolioDashboard · PositionTable · TradePanel
+        │   ├── prediction/ IndicatorPanel
+        │   ├── stock/      QuoteBar · StockSearch
+        │   └── layout/     Header (with session modal) · Sidebar
+        ├── store/          Zustand store with localStorage persistence
+        └── services/       Axios API client
+```
 
 ## Quick Start
 
-### 1. Backend setup
+### Prerequisites
+
+- Python 3.11+
+- Node.js 18+
+- ICICIDirect Breeze API credentials ([register here](https://api.icicidirect.com/))
+
+### Backend
 
 ```bash
 cd backend
-
-# Create virtualenv & install deps (using uv — recommended)
-pip install uv
-uv venv && source .venv/bin/activate
-uv pip install -e .
-
-# Or with standard pip:
+python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-
-# Set up credentials
-cp .env.example .env
-# Edit .env with your Breeze API_KEY, API_SECRET, SESSION_TOKEN
-
-# Run the API server
-python main.py
-# → http://localhost:8000  |  Docs: http://localhost:8000/docs
+cp .env.example .env   # fill in BREEZE_API_KEY and BREEZE_API_SECRET
+uvicorn main:app --reload --port 8000
 ```
 
-### 2. Frontend setup
+### Frontend
 
 ```bash
 cd frontend
 npm install
-npm run dev
-# → http://localhost:5173
+npm run dev            # http://localhost:5173
 ```
 
----
+## Daily Session Token (Breeze API)
 
-## Getting a Fresh Session Token (Daily)
+The Breeze session token expires every 24 hours. No need to edit `.env` manually:
 
-1. Log in to [ICICIDirect API portal](https://api.icicidirect.com)
-2. Generate a new session token
-3. Update `SESSION_TOKEN` in `backend/.env`
-4. Restart the backend server
+1. Click **Session** in the top-right of the app header
+2. Visit the login URL shown in the dialog
+3. Log in to ICICI Direct — copy the `apisession` value from the redirect URL
+4. Paste it into the dialog and click **Save & Reconnect**
 
----
+The backend updates `.env`, flushes caches, and reconnects without a restart.
 
-## Adding a New Chart
+## ML Models
 
-1. Create `frontend/src/components/charts/YourChart.jsx`
-2. Add one entry to `frontend/src/components/charts/chartRegistry.js`
+The prediction engine uses a 5-model ensemble trained on 500 days of daily OHLCV:
 
-That's it — the chart renders automatically in the analysis view.
+| Model | Type |
+|---|---|
+| Random Forest | Direction classifier |
+| Extra Trees | Direction classifier |
+| Gradient Boosting | Direction classifier |
+| XGBoost | Direction classifier |
+| MLP Neural Net | Direction classifier (128→64→32, early stopping) |
 
----
+**Target**: 5-day forward return ≥ +2% → BUY, ≤ −2% → SELL, else HOLD
+**Features**: 33 features including RSI, MACD, Bollinger, Stochastic, ATR + 15 lag/trend features
+**Signal**: majority vote + confidence score; falls back to HOLD if confidence < 55%
 
-## API Endpoints
+Retrain automatically when a stock is first analyzed. The **Models** tab shows CV accuracy per model vs the 33% random baseline and flags models that need retraining.
 
-| Method | Path | Description |
-|--------|------|-------------|
-| GET | `/api/stocks/popular` | List of 20 popular NSE stocks |
-| GET | `/api/stocks/quote?stock_code=INFY` | Live quote |
-| GET | `/api/stocks/history?stock_code=INFY` | OHLCV bars |
-| GET | `/api/stocks/indicators?stock_code=INFY` | Technical indicators |
-| POST | `/api/predictions/analyze` | Run AI analysis |
-| GET | `/api/portfolio/` | Full portfolio with live P&L |
-| POST | `/api/portfolio/trade` | Execute paper trade |
-| DELETE | `/api/portfolio/reset` | Reset to ₹10,00,000 |
+## Environment Variables
 
----
-
-> ⚠️ **Disclaimer**: Predictions are for informational purposes only. Not financial advice.
+| Variable | Description |
+|---|---|
+| `BREEZE_API_KEY` | ICICIDirect API key |
+| `BREEZE_API_SECRET` | ICICIDirect API secret |
+| `BREEZE_SESSION_TOKEN` | Daily session token (update via UI — no restart needed) |
+| `ALLOWED_ORIGINS` | Comma-separated CORS origins |
+| `PAPER_PORTFOLIO_FILE` | Path to paper portfolio JSON |
+| `INITIAL_CAPITAL` | Starting virtual cash (default ₹10,00,000) |

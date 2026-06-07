@@ -1,0 +1,35 @@
+name: Deploy to Home Server
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: self-hosted   # runs on YOUR server laptop, not GitHub's cloud
+
+    steps:
+      - name: Pull latest code
+        run: |
+          cd ${{ github.workspace }}
+          git pull origin main
+
+      - name: Install Python deps (if requirements changed)
+        run: |
+          cd ${{ github.workspace }}/backend
+          ../.venv/bin/pip install -r requirements.txt --quiet
+
+      - name: Build frontend (if source changed)
+        run: |
+          cd ${{ github.workspace }}/frontend
+          npm install --silent
+          npm run build
+
+      - name: Restart app
+        run: |
+          pm2 restart stockai || pm2 start ${{ github.workspace }}/ecosystem.config.cjs
+
+      - name: Health check
+        run: |
+          sleep 4
+          curl -sf http://localhost:8000/health && echo "✓ App is up" || echo "✗ Health check failed"

@@ -88,6 +88,7 @@ class TradeOrder(BaseModel):
 class Position(BaseModel):
     stock_code: str
     exchange_code: str
+    sector: Optional[str] = None
     quantity: int
     avg_buy_price: float
     current_price: float
@@ -125,3 +126,50 @@ class StockInfo(BaseModel):
     name: str
     exchange_code: str
     sector: str
+
+
+# ── Portfolio Predictions ─────────────────────────────────────────────────────
+
+class StockPrediction(BaseModel):
+    stock_code: str
+    exchange_code: str
+    signal: Literal["BUY", "SELL", "HOLD"]
+    confidence: float
+    agreement_pct: float
+    model_votes: dict[str, str]          # {"RF": "BUY", "XGBoost": "SELL", ...}
+    avg_prob_up: float
+    avg_prob_down: float
+    current_price: float
+    predicted_price: float
+    price_change_pct: float
+    price_predictions: dict[str, float]  # {"GBR": 1400.0, "LSTM": 1390.0}
+    target_price: float
+    stop_loss: float
+    n_models: int
+    # Position context
+    quantity: int
+    invested_value: float
+    current_value: float
+    pnl: float
+    pnl_pct: float
+    expected_gain: float                 # predicted_price * quantity - current_value
+    error: Optional[str] = None
+
+
+class PortfolioPredictionSummary(BaseModel):
+    total_positions: int
+    analyzed: int
+    failed: int
+    buy_count: int
+    sell_count: int
+    hold_count: int
+    avg_confidence: float
+    bullish_pct: float
+    expected_portfolio_move_pct: float   # value-weighted average of price_change_pct
+    models_used: list[str]
+
+
+class PortfolioPredictions(BaseModel):
+    summary: PortfolioPredictionSummary
+    predictions: list[StockPrediction]
+    timestamp: str

@@ -1,0 +1,70 @@
+{
+  "stock_code": "SAREIN",
+  "trained_at": "2026-04-17T22:25:00.828363+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.31,
+      "f1": 0.26
+    },
+    "et": {
+      "accuracy": 0.31,
+      "f1": 0.261
+    },
+    "gbc": {
+      "accuracy": 0.325,
+      "f1": 0.287
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 11.92,
+    "mae": 9.43,
+    "r2": 0.039
+  },
+  "top_features": {
+    "atr": 0.0718,
+    "vol_sma_ratio": 0.0662,
+    "price_momentum_5": 0.0636,
+    "price_momentum_10": 0.0584,
+    "high_low_range": 0.0564,
+    "stoch_k": 0.053,
+    "rsi": 0.0524,
+    "macd_hist": 0.0517,
+    "close_vs_sma20": 0.0504,
+    "close_vs_sma50": 0.0478
+  },
+  "feature_importances": {
+    "rsi": 0.0524,
+    "macd": 0.0428,
+    "macd_signal": 0.0437,
+    "macd_hist": 0.0517,
+    "sma_20": 0.0368,
+    "sma_50": 0.029,
+    "sma_200": 0.0309,
+    "ema_12": 0.0408,
+    "ema_26": 0.0332,
+    "bb_upper": 0.0459,
+    "bb_lower": 0.038,
+    "bb_pct": 0.0401,
+    "atr": 0.0718,
+    "stoch_k": 0.053,
+    "stoch_d": 0.0474,
+    "vol_sma_ratio": 0.0662,
+    "price_momentum_5": 0.0636,
+    "price_momentum_10": 0.0584,
+    "close_vs_sma20": 0.0504,
+    "close_vs_sma50": 0.0478,
+    "high_low_range": 0.0564
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

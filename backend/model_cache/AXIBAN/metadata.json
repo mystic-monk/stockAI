@@ -1,0 +1,70 @@
+{
+  "stock_code": "AXIBAN",
+  "trained_at": "2026-04-17T22:14:19.885375+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.295,
+      "f1": 0.221
+    },
+    "et": {
+      "accuracy": 0.302,
+      "f1": 0.233
+    },
+    "gbc": {
+      "accuracy": 0.252,
+      "f1": 0.209
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 39.4,
+    "mae": 31.41,
+    "r2": 0.711
+  },
+  "top_features": {
+    "stoch_d": 0.0631,
+    "bb_upper": 0.0621,
+    "high_low_range": 0.0606,
+    "price_momentum_10": 0.0557,
+    "stoch_k": 0.0535,
+    "macd_hist": 0.0532,
+    "sma_200": 0.051,
+    "sma_50": 0.0504,
+    "macd": 0.0477,
+    "ema_12": 0.0468
+  },
+  "feature_importances": {
+    "rsi": 0.0415,
+    "macd": 0.0477,
+    "macd_signal": 0.0372,
+    "macd_hist": 0.0532,
+    "sma_20": 0.0453,
+    "sma_50": 0.0504,
+    "sma_200": 0.051,
+    "ema_12": 0.0468,
+    "ema_26": 0.0433,
+    "bb_upper": 0.0621,
+    "bb_lower": 0.0424,
+    "bb_pct": 0.0384,
+    "atr": 0.0427,
+    "stoch_k": 0.0535,
+    "stoch_d": 0.0631,
+    "vol_sma_ratio": 0.0444,
+    "price_momentum_5": 0.0407,
+    "price_momentum_10": 0.0557,
+    "close_vs_sma20": 0.0437,
+    "close_vs_sma50": 0.0361,
+    "high_low_range": 0.0606
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

@@ -1,0 +1,70 @@
+{
+  "stock_code": "JSWINF",
+  "trained_at": "2026-04-17T22:31:26.494723+00:00",
+  "n_samples": 139,
+  "n_features": 21,
+  "data_from": "2025-09-22",
+  "data_to": "2026-04-17",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.166,
+      "f1": 0.118
+    },
+    "et": {
+      "accuracy": 0.159,
+      "f1": 0.113
+    },
+    "gbc": {
+      "accuracy": 0.224,
+      "f1": 0.179
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 10.63,
+    "mae": 8.85,
+    "r2": -0.504
+  },
+  "top_features": {
+    "close_vs_sma20": 0.0823,
+    "stoch_k": 0.0664,
+    "rsi": 0.0608,
+    "stoch_d": 0.0568,
+    "bb_pct": 0.0556,
+    "bb_upper": 0.0541,
+    "sma_20": 0.0513,
+    "price_momentum_5": 0.0488,
+    "vol_sma_ratio": 0.0467,
+    "macd_signal": 0.0459
+  },
+  "feature_importances": {
+    "rsi": 0.0608,
+    "macd": 0.0428,
+    "macd_signal": 0.0459,
+    "macd_hist": 0.0453,
+    "sma_20": 0.0513,
+    "sma_50": 0.0412,
+    "sma_200": 0.0404,
+    "ema_12": 0.037,
+    "ema_26": 0.0425,
+    "bb_upper": 0.0541,
+    "bb_lower": 0.0402,
+    "bb_pct": 0.0556,
+    "atr": 0.0375,
+    "stoch_k": 0.0664,
+    "stoch_d": 0.0568,
+    "vol_sma_ratio": 0.0467,
+    "price_momentum_5": 0.0488,
+    "price_momentum_10": 0.0389,
+    "close_vs_sma20": 0.0823,
+    "close_vs_sma50": 0.0288,
+    "high_low_range": 0.0366
+  },
+  "days_since_trained": 0,
+  "is_stale": false
+}

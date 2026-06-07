@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { createChart } from 'lightweight-charts'
+import { createChart, HistogramSeries } from 'lightweight-charts'
 
 export default function VolumeChart({ bars = [], height = 120 }) {
   const containerRef = useRef(null)
@@ -16,7 +16,7 @@ export default function VolumeChart({ bars = [], height = 120 }) {
       timeScale: { borderColor: 'rgba(59,130,246,0.12)', timeVisible: true },
     })
 
-    const series = chart.addHistogramSeries({
+    const series = chart.addSeries(HistogramSeries, {
       color: 'rgba(59,130,246,0.5)',
       priceFormat: { type: 'volume' },
       priceScaleId: '',
@@ -46,6 +46,5 @@ export default function VolumeChart({ bars = [], height = 120 }) {
     return () => { chart.remove(); ro.disconnect() }
   }, [bars, height])
 
-  if (bars.length === 0) return <div style={{ height }} />
   return <div ref={containerRef} style={{ width: '100%', height }} />
 }
