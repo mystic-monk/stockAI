@@ -1,0 +1,91 @@
+{
+  "stock_code": "ALLBLE",
+  "trained_at": "2026-06-07T22:57:25.774013+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.336,
+      "f1": 0.288
+    },
+    "et": {
+      "accuracy": 0.336,
+      "f1": 0.24
+    },
+    "gbc": {
+      "accuracy": 0.282,
+      "f1": 0.259
+    },
+    "mlp": {
+      "accuracy": 0.464,
+      "f1": 0.485
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 20.72,
+    "mae": 16.38,
+    "r2": 0.744
+  },
+  "top_features": {
+    "close_vs_sma200": 0.0994,
+    "sma50_slope": 0.0856,
+    "macd_signal": 0.0796,
+    "atr": 0.0514,
+    "obv_sma_ratio": 0.0453,
+    "obv_roc5": 0.0435,
+    "macd_hist_lag3": 0.0433,
+    "sma20_slope": 0.0376,
+    "vol_sma_ratio": 0.0335,
+    "close_vs_sma50": 0.0323
+  },
+  "feature_importances": {
+    "rsi": 0.0165,
+    "rsi_lag1": 0.0155,
+    "rsi_lag3": 0.0146,
+    "rsi_ma5": 0.0178,
+    "macd": 0.0274,
+    "macd_signal": 0.0796,
+    "macd_hist": 0.0295,
+    "macd_hist_lag1": 0.0232,
+    "macd_hist_lag3": 0.0433,
+    "close_vs_sma20": 0.0103,
+    "close_vs_sma50": 0.0323,
+    "close_vs_sma200": 0.0994,
+    "above_sma20": 0.0002,
+    "above_sma50": 0.0024,
+    "above_sma200": 0.0146,
+    "sma20_slope": 0.0376,
+    "sma50_slope": 0.0856,
+    "stoch_k": 0.0255,
+    "stoch_d": 0.017,
+    "bb_pct": 0.0164,
+    "return_1d": 0.029,
+    "return_lag1": 0.0122,
+    "return_lag2": 0.0153,
+    "return_3d": 0.0157,
+    "price_momentum_5": 0.0135,
+    "price_momentum_10": 0.0196,
+    "atr": 0.0514,
+    "high_low_range": 0.0243,
+    "vol_sma_ratio": 0.0335,
+    "vol_ratio_lag1": 0.0205,
+    "obv_roc5": 0.0435,
+    "obv_sma_ratio": 0.0453,
+    "body_pct": 0.0245,
+    "upper_wick": 0.0177,
+    "lower_wick": 0.0253
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

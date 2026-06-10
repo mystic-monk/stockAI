@@ -1,0 +1,91 @@
+{
+  "stock_code": "TATSTE",
+  "trained_at": "2026-06-07T22:57:40.430201+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.2,
+      "f1": 0.175
+    },
+    "et": {
+      "accuracy": 0.273,
+      "f1": 0.252
+    },
+    "gbc": {
+      "accuracy": 0.255,
+      "f1": 0.246
+    },
+    "mlp": {
+      "accuracy": 0.309,
+      "f1": 0.337
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 8.8,
+    "mae": 7.61,
+    "r2": -1.796
+  },
+  "top_features": {
+    "macd_hist_lag3": 0.0793,
+    "sma50_slope": 0.0605,
+    "close_vs_sma200": 0.0576,
+    "macd_hist_lag1": 0.0468,
+    "macd_signal": 0.0434,
+    "obv_sma_ratio": 0.0393,
+    "rsi_lag3": 0.0377,
+    "rsi": 0.0366,
+    "atr": 0.0343,
+    "macd_hist": 0.0339
+  },
+  "feature_importances": {
+    "rsi": 0.0366,
+    "rsi_lag1": 0.0269,
+    "rsi_lag3": 0.0377,
+    "rsi_ma5": 0.0315,
+    "macd": 0.0222,
+    "macd_signal": 0.0434,
+    "macd_hist": 0.0339,
+    "macd_hist_lag1": 0.0468,
+    "macd_hist_lag3": 0.0793,
+    "close_vs_sma20": 0.0243,
+    "close_vs_sma50": 0.0222,
+    "close_vs_sma200": 0.0576,
+    "above_sma20": 0.0025,
+    "above_sma50": 0.0008,
+    "above_sma200": 0.0,
+    "sma20_slope": 0.0337,
+    "sma50_slope": 0.0605,
+    "stoch_k": 0.0315,
+    "stoch_d": 0.0291,
+    "bb_pct": 0.0197,
+    "return_1d": 0.026,
+    "return_lag1": 0.0144,
+    "return_lag2": 0.0169,
+    "return_3d": 0.0183,
+    "price_momentum_5": 0.0331,
+    "price_momentum_10": 0.0319,
+    "atr": 0.0343,
+    "high_low_range": 0.0234,
+    "vol_sma_ratio": 0.0264,
+    "vol_ratio_lag1": 0.0195,
+    "obv_roc5": 0.031,
+    "obv_sma_ratio": 0.0393,
+    "body_pct": 0.023,
+    "upper_wick": 0.009,
+    "lower_wick": 0.0131
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

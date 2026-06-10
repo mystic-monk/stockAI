@@ -1,0 +1,91 @@
+{
+  "stock_code": "CITUNI",
+  "trained_at": "2026-06-07T22:39:23.096924+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.245,
+      "f1": 0.161
+    },
+    "et": {
+      "accuracy": 0.236,
+      "f1": 0.178
+    },
+    "gbc": {
+      "accuracy": 0.309,
+      "f1": 0.287
+    },
+    "mlp": {
+      "accuracy": 0.3,
+      "f1": 0.295
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 6.12,
+    "mae": 5.09,
+    "r2": 0.605
+  },
+  "top_features": {
+    "macd_hist_lag3": 0.074,
+    "macd_hist_lag1": 0.0613,
+    "sma50_slope": 0.0563,
+    "rsi_lag3": 0.0456,
+    "return_3d": 0.0455,
+    "rsi_lag1": 0.0423,
+    "close_vs_sma200": 0.0411,
+    "macd_signal": 0.0389,
+    "return_lag2": 0.0362,
+    "macd_hist": 0.0358
+  },
+  "feature_importances": {
+    "rsi": 0.0231,
+    "rsi_lag1": 0.0423,
+    "rsi_lag3": 0.0456,
+    "rsi_ma5": 0.03,
+    "macd": 0.0335,
+    "macd_signal": 0.0389,
+    "macd_hist": 0.0358,
+    "macd_hist_lag1": 0.0613,
+    "macd_hist_lag3": 0.074,
+    "close_vs_sma20": 0.0209,
+    "close_vs_sma50": 0.0265,
+    "close_vs_sma200": 0.0411,
+    "above_sma20": 0.001,
+    "above_sma50": 0.0013,
+    "above_sma200": 0.0042,
+    "sma20_slope": 0.0282,
+    "sma50_slope": 0.0563,
+    "stoch_k": 0.0166,
+    "stoch_d": 0.0337,
+    "bb_pct": 0.016,
+    "return_1d": 0.0289,
+    "return_lag1": 0.0272,
+    "return_lag2": 0.0362,
+    "return_3d": 0.0455,
+    "price_momentum_5": 0.0163,
+    "price_momentum_10": 0.0279,
+    "atr": 0.02,
+    "high_low_range": 0.0167,
+    "vol_sma_ratio": 0.0189,
+    "vol_ratio_lag1": 0.0261,
+    "obv_roc5": 0.014,
+    "obv_sma_ratio": 0.0306,
+    "body_pct": 0.0244,
+    "upper_wick": 0.0183,
+    "lower_wick": 0.0186
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

@@ -1,0 +1,118 @@
+{
+  "stock_code": "SYRTEC",
+  "trained_at": "2026-06-07T22:43:53.894447+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.373,
+      "f1": 0.309
+    },
+    "et": {
+      "accuracy": 0.364,
+      "f1": 0.301
+    },
+    "gbc": {
+      "accuracy": 0.373,
+      "f1": 0.353
+    },
+    "mlp": {
+      "accuracy": 0.327,
+      "f1": 0.275
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 177.27,
+    "mae": 150.72,
+    "r2": -1.93
+  },
+  "top_features": {
+    "sma50_slope": 0.0906,
+    "atr": 0.0676,
+    "close_vs_sma200": 0.0572,
+    "sma20_slope": 0.0549,
+    "macd_signal": 0.0485,
+    "rsi_ma5": 0.0414,
+    "obv_sma_ratio": 0.0405,
+    "close_vs_sma20": 0.037,
+    "price_momentum_5": 0.0319,
+    "macd_hist_lag1": 0.0315
+  },
+  "feature_importances": {
+    "rsi": 0.026,
+    "rsi_lag1": 0.0246,
+    "rsi_lag3": 0.0288,
+    "rsi_ma5": 0.0414,
+    "macd": 0.0251,
+    "macd_signal": 0.0485,
+    "macd_hist": 0.0309,
+    "macd_hist_lag1": 0.0315,
+    "macd_hist_lag3": 0.0285,
+    "close_vs_sma20": 0.037,
+    "close_vs_sma50": 0.0272,
+    "close_vs_sma200": 0.0572,
+    "above_sma20": 0.0004,
+    "above_sma50": 0.0005,
+    "above_sma200": 0.0072,
+    "sma20_slope": 0.0549,
+    "sma50_slope": 0.0906,
+    "stoch_k": 0.0205,
+    "stoch_d": 0.018,
+    "bb_pct": 0.0122,
+    "return_1d": 0.0174,
+    "return_lag1": 0.0211,
+    "return_lag2": 0.0156,
+    "return_3d": 0.0255,
+    "price_momentum_5": 0.0319,
+    "price_momentum_10": 0.0241,
+    "atr": 0.0676,
+    "high_low_range": 0.0159,
+    "vol_sma_ratio": 0.0314,
+    "vol_ratio_lag1": 0.0226,
+    "obv_roc5": 0.0294,
+    "obv_sma_ratio": 0.0405,
+    "body_pct": 0.0168,
+    "upper_wick": 0.0151,
+    "lower_wick": 0.0138
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false,
+  "tuned_params": {
+    "rf": {
+      "n_estimators": 206,
+      "max_depth": 8,
+      "min_samples_split": 23,
+      "max_features": "log2"
+    },
+    "et": {
+      "n_estimators": 140,
+      "max_depth": 4,
+      "max_features": "sqrt"
+    },
+    "gbc": {
+      "n_estimators": 178,
+      "max_depth": 4,
+      "learning_rate": 0.0675478145634042,
+      "subsample": 0.9891444308186262
+    },
+    "mlp": {
+      "n_layers": 3,
+      "layer_0": 32,
+      "layer_1": 32,
+      "layer_2": 32,
+      "alpha": 0.002593597568540972
+    }
+  },
+  "tuned_at": "2026-06-07T23:08:32.431538+00:00"
+}

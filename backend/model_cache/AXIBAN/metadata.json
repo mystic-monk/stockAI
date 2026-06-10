@@ -1,0 +1,91 @@
+{
+  "stock_code": "AXIBAN",
+  "trained_at": "2026-06-07T22:21:14.295114+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.264,
+      "f1": 0.185
+    },
+    "et": {
+      "accuracy": 0.345,
+      "f1": 0.263
+    },
+    "gbc": {
+      "accuracy": NaN,
+      "f1": NaN
+    },
+    "mlp": {
+      "accuracy": 0.309,
+      "f1": 0.259
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 26.62,
+    "mae": 19.74,
+    "r2": 0.659
+  },
+  "top_features": {
+    "sma50_slope": 0.0849,
+    "macd": 0.0671,
+    "macd_hist": 0.0511,
+    "macd_hist_lag1": 0.0486,
+    "price_momentum_10": 0.0464,
+    "obv_sma_ratio": 0.0418,
+    "bb_pct": 0.0414,
+    "rsi_ma5": 0.041,
+    "body_pct": 0.0347,
+    "rsi_lag3": 0.0341
+  },
+  "feature_importances": {
+    "rsi": 0.0296,
+    "rsi_lag1": 0.0221,
+    "rsi_lag3": 0.0341,
+    "rsi_ma5": 0.041,
+    "macd": 0.0671,
+    "macd_signal": 0.0304,
+    "macd_hist": 0.0511,
+    "macd_hist_lag1": 0.0486,
+    "macd_hist_lag3": 0.0315,
+    "close_vs_sma20": 0.0274,
+    "close_vs_sma50": 0.0209,
+    "close_vs_sma200": 0.0221,
+    "above_sma20": 0.0,
+    "above_sma50": 0.0033,
+    "above_sma200": 0.0002,
+    "sma20_slope": 0.0305,
+    "sma50_slope": 0.0849,
+    "stoch_k": 0.0299,
+    "stoch_d": 0.034,
+    "bb_pct": 0.0414,
+    "return_1d": 0.0122,
+    "return_lag1": 0.0245,
+    "return_lag2": 0.0285,
+    "return_3d": 0.013,
+    "price_momentum_5": 0.0277,
+    "price_momentum_10": 0.0464,
+    "atr": 0.0274,
+    "high_low_range": 0.0196,
+    "vol_sma_ratio": 0.0133,
+    "vol_ratio_lag1": 0.0124,
+    "obv_roc5": 0.0188,
+    "obv_sma_ratio": 0.0418,
+    "body_pct": 0.0347,
+    "upper_wick": 0.0168,
+    "lower_wick": 0.0127
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

@@ -1,0 +1,91 @@
+{
+  "stock_code": "PATEN",
+  "trained_at": "2026-06-07T22:41:40.626426+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.355,
+      "f1": 0.312
+    },
+    "et": {
+      "accuracy": 0.345,
+      "f1": 0.308
+    },
+    "gbc": {
+      "accuracy": NaN,
+      "f1": NaN
+    },
+    "mlp": {
+      "accuracy": 0.318,
+      "f1": 0.329
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 1.77,
+    "mae": 1.57,
+    "r2": -1.159
+  },
+  "top_features": {
+    "stoch_d": 0.0674,
+    "obv_roc5": 0.0599,
+    "close_vs_sma200": 0.0587,
+    "macd_hist_lag3": 0.0519,
+    "macd_hist": 0.0481,
+    "atr": 0.0452,
+    "macd_hist_lag1": 0.044,
+    "vol_ratio_lag1": 0.0426,
+    "macd_signal": 0.0404,
+    "rsi": 0.0403
+  },
+  "feature_importances": {
+    "rsi": 0.0403,
+    "rsi_lag1": 0.0283,
+    "rsi_lag3": 0.023,
+    "rsi_ma5": 0.0197,
+    "macd": 0.0219,
+    "macd_signal": 0.0404,
+    "macd_hist": 0.0481,
+    "macd_hist_lag1": 0.044,
+    "macd_hist_lag3": 0.0519,
+    "close_vs_sma20": 0.0155,
+    "close_vs_sma50": 0.0327,
+    "close_vs_sma200": 0.0587,
+    "above_sma20": 0.0,
+    "above_sma50": 0.004,
+    "above_sma200": 0.0,
+    "sma20_slope": 0.0123,
+    "sma50_slope": 0.025,
+    "stoch_k": 0.0247,
+    "stoch_d": 0.0674,
+    "bb_pct": 0.0252,
+    "return_1d": 0.0117,
+    "return_lag1": 0.0158,
+    "return_lag2": 0.0202,
+    "return_3d": 0.018,
+    "price_momentum_5": 0.0308,
+    "price_momentum_10": 0.0276,
+    "atr": 0.0452,
+    "high_low_range": 0.0277,
+    "vol_sma_ratio": 0.0307,
+    "vol_ratio_lag1": 0.0426,
+    "obv_roc5": 0.0599,
+    "obv_sma_ratio": 0.0373,
+    "body_pct": 0.0246,
+    "upper_wick": 0.0128,
+    "lower_wick": 0.0121
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

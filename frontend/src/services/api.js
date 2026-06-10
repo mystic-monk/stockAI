@@ -17,6 +17,8 @@ api.interceptors.response.use(
 export const stocksApi = {
   getPopular: () => api.get('/stocks/popular'),
   scan: () => api.get('/stocks/scan', { timeout: 300000 }),
+  analyzeOne: (stockCode, exchangeCode = 'NSE') =>
+    api.post('/predictions/analyze', { stock_code: stockCode, exchange_code: exchangeCode }, { timeout: 120000 }),
   getQuote: (stockCode, exchangeCode = 'NSE') =>
     api.get('/stocks/quote', { params: { stock_code: stockCode, exchange_code: exchangeCode } }),
   getHistory: (stockCode, exchangeCode = 'NSE', interval = '1day', days = 365) =>
@@ -52,6 +54,7 @@ export const authApi = {
 // ── Models ───────────────────────────────────────────────────────────────────
 export const modelsApi = {
   getStatus: () => api.get('/models/status'),
+  getQueue:  () => api.get('/models/queue'),
   getStockStatus: (stockCode) => api.get(`/models/status/${stockCode}`),
   retrain: (stockCode, exchangeCode = 'NSE') =>
     api.post(`/models/${stockCode}/retrain`, null, { params: { exchange_code: exchangeCode } }),

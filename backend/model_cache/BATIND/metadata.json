@@ -1,0 +1,91 @@
+{
+  "stock_code": "BATIND",
+  "trained_at": "2026-06-07T22:41:45.054667+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.445,
+      "f1": 0.357
+    },
+    "et": {
+      "accuracy": 0.427,
+      "f1": 0.325
+    },
+    "gbc": {
+      "accuracy": NaN,
+      "f1": NaN
+    },
+    "mlp": {
+      "accuracy": 0.3,
+      "f1": 0.291
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 33.23,
+    "mae": 28.08,
+    "r2": -0.158
+  },
+  "top_features": {
+    "obv_roc5": 0.0923,
+    "sma50_slope": 0.0864,
+    "atr": 0.073,
+    "macd_signal": 0.068,
+    "return_lag2": 0.0597,
+    "sma20_slope": 0.0486,
+    "close_vs_sma200": 0.042,
+    "price_momentum_5": 0.0375,
+    "stoch_d": 0.0349,
+    "return_3d": 0.0343
+  },
+  "feature_importances": {
+    "rsi": 0.0157,
+    "rsi_lag1": 0.0112,
+    "rsi_lag3": 0.0155,
+    "rsi_ma5": 0.0135,
+    "macd": 0.0283,
+    "macd_signal": 0.068,
+    "macd_hist": 0.0165,
+    "macd_hist_lag1": 0.016,
+    "macd_hist_lag3": 0.0221,
+    "close_vs_sma20": 0.0127,
+    "close_vs_sma50": 0.0265,
+    "close_vs_sma200": 0.042,
+    "above_sma20": 0.0003,
+    "above_sma50": 0.0006,
+    "above_sma200": 0.0,
+    "sma20_slope": 0.0486,
+    "sma50_slope": 0.0864,
+    "stoch_k": 0.0244,
+    "stoch_d": 0.0349,
+    "bb_pct": 0.0227,
+    "return_1d": 0.0154,
+    "return_lag1": 0.0203,
+    "return_lag2": 0.0597,
+    "return_3d": 0.0343,
+    "price_momentum_5": 0.0375,
+    "price_momentum_10": 0.0176,
+    "atr": 0.073,
+    "high_low_range": 0.02,
+    "vol_sma_ratio": 0.0153,
+    "vol_ratio_lag1": 0.0325,
+    "obv_roc5": 0.0923,
+    "obv_sma_ratio": 0.0336,
+    "body_pct": 0.016,
+    "upper_wick": 0.0093,
+    "lower_wick": 0.0174
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

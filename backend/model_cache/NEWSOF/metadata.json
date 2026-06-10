@@ -1,0 +1,91 @@
+{
+  "stock_code": "NEWSOF",
+  "trained_at": "2026-06-07T22:45:34.314253+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.4,
+      "f1": 0.387
+    },
+    "et": {
+      "accuracy": 0.545,
+      "f1": 0.488
+    },
+    "gbc": {
+      "accuracy": NaN,
+      "f1": NaN
+    },
+    "mlp": {
+      "accuracy": 0.409,
+      "f1": 0.39
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 35.41,
+    "mae": 29.58,
+    "r2": -1.339
+  },
+  "top_features": {
+    "atr": 0.0968,
+    "close_vs_sma200": 0.0811,
+    "sma50_slope": 0.0639,
+    "stoch_d": 0.0517,
+    "obv_sma_ratio": 0.0506,
+    "macd": 0.0493,
+    "macd_signal": 0.0428,
+    "stoch_k": 0.0377,
+    "macd_hist_lag1": 0.0374,
+    "close_vs_sma50": 0.0367
+  },
+  "feature_importances": {
+    "rsi": 0.0172,
+    "rsi_lag1": 0.0201,
+    "rsi_lag3": 0.0208,
+    "rsi_ma5": 0.0279,
+    "macd": 0.0493,
+    "macd_signal": 0.0428,
+    "macd_hist": 0.0203,
+    "macd_hist_lag1": 0.0374,
+    "macd_hist_lag3": 0.0327,
+    "close_vs_sma20": 0.0288,
+    "close_vs_sma50": 0.0367,
+    "close_vs_sma200": 0.0811,
+    "above_sma20": 0.0012,
+    "above_sma50": 0.0019,
+    "above_sma200": 0.0,
+    "sma20_slope": 0.0183,
+    "sma50_slope": 0.0639,
+    "stoch_k": 0.0377,
+    "stoch_d": 0.0517,
+    "bb_pct": 0.0291,
+    "return_1d": 0.0225,
+    "return_lag1": 0.0243,
+    "return_lag2": 0.013,
+    "return_3d": 0.0224,
+    "price_momentum_5": 0.0183,
+    "price_momentum_10": 0.0167,
+    "atr": 0.0968,
+    "high_low_range": 0.0179,
+    "vol_sma_ratio": 0.0227,
+    "vol_ratio_lag1": 0.0176,
+    "obv_roc5": 0.0217,
+    "obv_sma_ratio": 0.0506,
+    "body_pct": 0.0144,
+    "upper_wick": 0.0109,
+    "lower_wick": 0.0112
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

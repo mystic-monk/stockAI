@@ -1,0 +1,117 @@
+{
+  "stock_code": "JIOFIN",
+  "trained_at": "2026-06-07T22:44:21.126093+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.391,
+      "f1": 0.295
+    },
+    "et": {
+      "accuracy": 0.4,
+      "f1": 0.281
+    },
+    "gbc": {
+      "accuracy": 0.409,
+      "f1": 0.326
+    },
+    "mlp": {
+      "accuracy": 0.382,
+      "f1": 0.35
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 5.89,
+    "mae": 4.51,
+    "r2": 0.224
+  },
+  "top_features": {
+    "close_vs_sma200": 0.0861,
+    "atr": 0.0825,
+    "macd_hist_lag1": 0.0709,
+    "sma50_slope": 0.0678,
+    "stoch_k": 0.0419,
+    "vol_ratio_lag1": 0.0417,
+    "bb_pct": 0.0407,
+    "obv_sma_ratio": 0.0399,
+    "macd_hist_lag3": 0.037,
+    "stoch_d": 0.0311
+  },
+  "feature_importances": {
+    "rsi": 0.0242,
+    "rsi_lag1": 0.0267,
+    "rsi_lag3": 0.0215,
+    "rsi_ma5": 0.0237,
+    "macd": 0.0271,
+    "macd_signal": 0.0125,
+    "macd_hist": 0.0274,
+    "macd_hist_lag1": 0.0709,
+    "macd_hist_lag3": 0.037,
+    "close_vs_sma20": 0.0231,
+    "close_vs_sma50": 0.023,
+    "close_vs_sma200": 0.0861,
+    "above_sma20": 0.0023,
+    "above_sma50": 0.0,
+    "above_sma200": 0.0056,
+    "sma20_slope": 0.0306,
+    "sma50_slope": 0.0678,
+    "stoch_k": 0.0419,
+    "stoch_d": 0.0311,
+    "bb_pct": 0.0407,
+    "return_1d": 0.0097,
+    "return_lag1": 0.0298,
+    "return_lag2": 0.0134,
+    "return_3d": 0.0157,
+    "price_momentum_5": 0.0224,
+    "price_momentum_10": 0.008,
+    "atr": 0.0825,
+    "high_low_range": 0.0193,
+    "vol_sma_ratio": 0.0257,
+    "vol_ratio_lag1": 0.0417,
+    "obv_roc5": 0.0093,
+    "obv_sma_ratio": 0.0399,
+    "body_pct": 0.0231,
+    "upper_wick": 0.0127,
+    "lower_wick": 0.0236
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false,
+  "tuned_params": {
+    "rf": {
+      "n_estimators": 111,
+      "max_depth": 4,
+      "min_samples_split": 18,
+      "max_features": "sqrt"
+    },
+    "et": {
+      "n_estimators": 370,
+      "max_depth": 4,
+      "max_features": "log2"
+    },
+    "gbc": {
+      "n_estimators": 203,
+      "max_depth": 3,
+      "learning_rate": 0.07782037614114587,
+      "subsample": 0.6047580878116331
+    },
+    "mlp": {
+      "n_layers": 2,
+      "layer_0": 32,
+      "layer_1": 64,
+      "alpha": 0.00043571359474764003
+    }
+  },
+  "tuned_at": "2026-06-07T23:06:36.194088+00:00"
+}

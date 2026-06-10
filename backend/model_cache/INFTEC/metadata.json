@@ -1,0 +1,91 @@
+{
+  "stock_code": "INFTEC",
+  "trained_at": "2026-06-07T22:20:14.411811+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.382,
+      "f1": 0.328
+    },
+    "et": {
+      "accuracy": 0.382,
+      "f1": 0.312
+    },
+    "gbc": {
+      "accuracy": 0.318,
+      "f1": 0.249
+    },
+    "mlp": {
+      "accuracy": 0.382,
+      "f1": 0.355
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 78.82,
+    "mae": 69.28,
+    "r2": -0.277
+  },
+  "top_features": {
+    "atr": 0.0809,
+    "close_vs_sma200": 0.0626,
+    "sma50_slope": 0.0566,
+    "close_vs_sma50": 0.0437,
+    "bb_pct": 0.0417,
+    "stoch_d": 0.0389,
+    "price_momentum_10": 0.0368,
+    "macd_hist_lag3": 0.0365,
+    "close_vs_sma20": 0.0362,
+    "rsi_ma5": 0.0353
+  },
+  "feature_importances": {
+    "rsi": 0.03,
+    "rsi_lag1": 0.0269,
+    "rsi_lag3": 0.025,
+    "rsi_ma5": 0.0353,
+    "macd": 0.0328,
+    "macd_signal": 0.0243,
+    "macd_hist": 0.0292,
+    "macd_hist_lag1": 0.0218,
+    "macd_hist_lag3": 0.0365,
+    "close_vs_sma20": 0.0362,
+    "close_vs_sma50": 0.0437,
+    "close_vs_sma200": 0.0626,
+    "above_sma20": 0.0025,
+    "above_sma50": 0.0022,
+    "above_sma200": 0.0005,
+    "sma20_slope": 0.0275,
+    "sma50_slope": 0.0566,
+    "stoch_k": 0.0284,
+    "stoch_d": 0.0389,
+    "bb_pct": 0.0417,
+    "return_1d": 0.0157,
+    "return_lag1": 0.0168,
+    "return_lag2": 0.016,
+    "return_3d": 0.03,
+    "price_momentum_5": 0.0279,
+    "price_momentum_10": 0.0368,
+    "atr": 0.0809,
+    "high_low_range": 0.0209,
+    "vol_sma_ratio": 0.0286,
+    "vol_ratio_lag1": 0.0175,
+    "obv_roc5": 0.0311,
+    "obv_sma_ratio": 0.0281,
+    "body_pct": 0.0175,
+    "upper_wick": 0.0138,
+    "lower_wick": 0.0155
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

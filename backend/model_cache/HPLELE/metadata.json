@@ -1,0 +1,91 @@
+{
+  "stock_code": "HPLELE",
+  "trained_at": "2026-06-07T22:43:31.002559+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.491,
+      "f1": 0.455
+    },
+    "et": {
+      "accuracy": 0.5,
+      "f1": 0.481
+    },
+    "gbc": {
+      "accuracy": NaN,
+      "f1": NaN
+    },
+    "mlp": {
+      "accuracy": 0.373,
+      "f1": 0.358
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 44.11,
+    "mae": 41.14,
+    "r2": -3.181
+  },
+  "top_features": {
+    "macd_signal": 0.1059,
+    "close_vs_sma200": 0.0797,
+    "sma20_slope": 0.0717,
+    "atr": 0.0609,
+    "sma50_slope": 0.0572,
+    "macd": 0.0449,
+    "macd_hist": 0.0374,
+    "stoch_d": 0.036,
+    "price_momentum_5": 0.0322,
+    "obv_roc5": 0.0317
+  },
+  "feature_importances": {
+    "rsi": 0.0119,
+    "rsi_lag1": 0.0142,
+    "rsi_lag3": 0.0289,
+    "rsi_ma5": 0.0216,
+    "macd": 0.0449,
+    "macd_signal": 0.1059,
+    "macd_hist": 0.0374,
+    "macd_hist_lag1": 0.0284,
+    "macd_hist_lag3": 0.0267,
+    "close_vs_sma20": 0.0237,
+    "close_vs_sma50": 0.0269,
+    "close_vs_sma200": 0.0797,
+    "above_sma20": 0.0021,
+    "above_sma50": 0.0084,
+    "above_sma200": 0.0,
+    "sma20_slope": 0.0717,
+    "sma50_slope": 0.0572,
+    "stoch_k": 0.0178,
+    "stoch_d": 0.036,
+    "bb_pct": 0.0152,
+    "return_1d": 0.024,
+    "return_lag1": 0.012,
+    "return_lag2": 0.015,
+    "return_3d": 0.0216,
+    "price_momentum_5": 0.0322,
+    "price_momentum_10": 0.0193,
+    "atr": 0.0609,
+    "high_low_range": 0.0204,
+    "vol_sma_ratio": 0.0207,
+    "vol_ratio_lag1": 0.0106,
+    "obv_roc5": 0.0317,
+    "obv_sma_ratio": 0.024,
+    "body_pct": 0.0111,
+    "upper_wick": 0.0178,
+    "lower_wick": 0.0201
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

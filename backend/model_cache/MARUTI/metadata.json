@@ -1,0 +1,118 @@
+{
+  "stock_code": "MARUTI",
+  "trained_at": "2026-06-07T22:21:44.410328+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.391,
+      "f1": 0.38
+    },
+    "et": {
+      "accuracy": 0.382,
+      "f1": 0.362
+    },
+    "gbc": {
+      "accuracy": 0.345,
+      "f1": 0.315
+    },
+    "mlp": {
+      "accuracy": 0.364,
+      "f1": 0.335
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 331.78,
+    "mae": 275.04,
+    "r2": -0.446
+  },
+  "top_features": {
+    "bb_pct": 0.0613,
+    "sma20_slope": 0.0526,
+    "high_low_range": 0.0507,
+    "macd_hist": 0.0442,
+    "rsi_ma5": 0.0432,
+    "obv_roc5": 0.0393,
+    "rsi": 0.0384,
+    "price_momentum_5": 0.0351,
+    "vol_sma_ratio": 0.0342,
+    "close_vs_sma200": 0.0335
+  },
+  "feature_importances": {
+    "rsi": 0.0384,
+    "rsi_lag1": 0.0307,
+    "rsi_lag3": 0.0306,
+    "rsi_ma5": 0.0432,
+    "macd": 0.0309,
+    "macd_signal": 0.033,
+    "macd_hist": 0.0442,
+    "macd_hist_lag1": 0.0322,
+    "macd_hist_lag3": 0.02,
+    "close_vs_sma20": 0.0305,
+    "close_vs_sma50": 0.0271,
+    "close_vs_sma200": 0.0335,
+    "above_sma20": 0.0008,
+    "above_sma50": 0.0036,
+    "above_sma200": 0.0015,
+    "sma20_slope": 0.0526,
+    "sma50_slope": 0.0309,
+    "stoch_k": 0.0333,
+    "stoch_d": 0.0244,
+    "bb_pct": 0.0613,
+    "return_1d": 0.0109,
+    "return_lag1": 0.013,
+    "return_lag2": 0.0246,
+    "return_3d": 0.0209,
+    "price_momentum_5": 0.0351,
+    "price_momentum_10": 0.0307,
+    "atr": 0.0294,
+    "high_low_range": 0.0507,
+    "vol_sma_ratio": 0.0342,
+    "vol_ratio_lag1": 0.032,
+    "obv_roc5": 0.0393,
+    "obv_sma_ratio": 0.0304,
+    "body_pct": 0.0187,
+    "upper_wick": 0.0144,
+    "lower_wick": 0.0132
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false,
+  "tuned_params": {
+    "rf": {
+      "n_estimators": 413,
+      "max_depth": 4,
+      "min_samples_split": 13,
+      "max_features": "log2"
+    },
+    "et": {
+      "n_estimators": 249,
+      "max_depth": 5,
+      "max_features": 0.7
+    },
+    "gbc": {
+      "n_estimators": 238,
+      "max_depth": 5,
+      "learning_rate": 0.019113388480036395,
+      "subsample": 0.790736414633289
+    },
+    "mlp": {
+      "n_layers": 3,
+      "layer_0": 32,
+      "layer_1": 32,
+      "layer_2": 256,
+      "alpha": 0.0032390994046650407
+    }
+  },
+  "tuned_at": "2026-06-07T23:02:15.824481+00:00"
+}

@@ -1,0 +1,91 @@
+{
+  "stock_code": "BAFINS",
+  "trained_at": "2026-06-07T22:44:18.598076+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.418,
+      "f1": 0.405
+    },
+    "et": {
+      "accuracy": 0.464,
+      "f1": 0.41
+    },
+    "gbc": {
+      "accuracy": 0.391,
+      "f1": 0.334
+    },
+    "mlp": {
+      "accuracy": 0.318,
+      "f1": 0.329
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 56.52,
+    "mae": 47.74,
+    "r2": -0.448
+  },
+  "top_features": {
+    "sma50_slope": 0.0934,
+    "close_vs_sma200": 0.0771,
+    "sma20_slope": 0.0759,
+    "close_vs_sma50": 0.0448,
+    "price_momentum_10": 0.044,
+    "rsi_ma5": 0.0437,
+    "macd_hist": 0.0416,
+    "macd_hist_lag1": 0.0393,
+    "macd_signal": 0.0391,
+    "high_low_range": 0.0391
+  },
+  "feature_importances": {
+    "rsi": 0.0259,
+    "rsi_lag1": 0.0296,
+    "rsi_lag3": 0.0292,
+    "rsi_ma5": 0.0437,
+    "macd": 0.0357,
+    "macd_signal": 0.0391,
+    "macd_hist": 0.0416,
+    "macd_hist_lag1": 0.0393,
+    "macd_hist_lag3": 0.0364,
+    "close_vs_sma20": 0.0153,
+    "close_vs_sma50": 0.0448,
+    "close_vs_sma200": 0.0771,
+    "above_sma20": 0.001,
+    "above_sma50": 0.0009,
+    "above_sma200": 0.039,
+    "sma20_slope": 0.0759,
+    "sma50_slope": 0.0934,
+    "stoch_k": 0.01,
+    "stoch_d": 0.0125,
+    "bb_pct": 0.0149,
+    "return_1d": 0.015,
+    "return_lag1": 0.0149,
+    "return_lag2": 0.0105,
+    "return_3d": 0.0073,
+    "price_momentum_5": 0.0197,
+    "price_momentum_10": 0.044,
+    "atr": 0.0315,
+    "high_low_range": 0.0391,
+    "vol_sma_ratio": 0.0118,
+    "vol_ratio_lag1": 0.0184,
+    "obv_roc5": 0.0107,
+    "obv_sma_ratio": 0.0286,
+    "body_pct": 0.0183,
+    "upper_wick": 0.015,
+    "lower_wick": 0.01
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

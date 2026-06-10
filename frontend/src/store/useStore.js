@@ -65,6 +65,20 @@ const useStore = create((set, get) => ({
     localStorage.setItem('stockai-pred-cache', JSON.stringify(entry))
     set({ portfolioPredictions: entry })
   },
+
+  // ── Models tab cache (in-memory only — no localStorage) ──────────────
+  modelsData: [],
+  modelsLoadedAt: 0,
+  setModelsData: (data) => set({ modelsData: data, modelsLoadedAt: Date.now() }),
+
+  // ── Discover scan cache (30-min TTL, in-memory) ───────────────────────
+  discoverResults: {},     // { stockCode: resultObj }
+  discoverScannedAt: 0,
+  setDiscoverResult: (code, result) => set(s => ({
+    discoverResults: { ...s.discoverResults, [code]: result },
+    discoverScannedAt: s.discoverScannedAt || Date.now(),
+  })),
+  clearDiscoverResults: () => set({ discoverResults: {}, discoverScannedAt: 0 }),
 }))
 
 export default useStore

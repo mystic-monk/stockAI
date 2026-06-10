@@ -1,0 +1,91 @@
+{
+  "stock_code": "TECEEC",
+  "trained_at": "2026-06-07T22:46:06.575968+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.3,
+      "f1": 0.267
+    },
+    "et": {
+      "accuracy": 0.291,
+      "f1": 0.279
+    },
+    "gbc": {
+      "accuracy": 0.236,
+      "f1": 0.23
+    },
+    "mlp": {
+      "accuracy": 0.336,
+      "f1": 0.355
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 56.95,
+    "mae": 40.15,
+    "r2": 0.653
+  },
+  "top_features": {
+    "macd_hist": 0.0741,
+    "close_vs_sma200": 0.0666,
+    "sma50_slope": 0.0521,
+    "price_momentum_5": 0.0499,
+    "macd_signal": 0.0467,
+    "macd_hist_lag1": 0.0422,
+    "macd": 0.0393,
+    "sma20_slope": 0.0385,
+    "macd_hist_lag3": 0.0376,
+    "atr": 0.0352
+  },
+  "feature_importances": {
+    "rsi": 0.0259,
+    "rsi_lag1": 0.0305,
+    "rsi_lag3": 0.0207,
+    "rsi_ma5": 0.0312,
+    "macd": 0.0393,
+    "macd_signal": 0.0467,
+    "macd_hist": 0.0741,
+    "macd_hist_lag1": 0.0422,
+    "macd_hist_lag3": 0.0376,
+    "close_vs_sma20": 0.0229,
+    "close_vs_sma50": 0.0314,
+    "close_vs_sma200": 0.0666,
+    "above_sma20": 0.001,
+    "above_sma50": 0.0011,
+    "above_sma200": 0.0027,
+    "sma20_slope": 0.0385,
+    "sma50_slope": 0.0521,
+    "stoch_k": 0.0264,
+    "stoch_d": 0.0322,
+    "bb_pct": 0.0165,
+    "return_1d": 0.0169,
+    "return_lag1": 0.021,
+    "return_lag2": 0.0215,
+    "return_3d": 0.0164,
+    "price_momentum_5": 0.0499,
+    "price_momentum_10": 0.0341,
+    "atr": 0.0352,
+    "high_low_range": 0.0194,
+    "vol_sma_ratio": 0.0272,
+    "vol_ratio_lag1": 0.0233,
+    "obv_roc5": 0.023,
+    "obv_sma_ratio": 0.023,
+    "body_pct": 0.0154,
+    "upper_wick": 0.0073,
+    "lower_wick": 0.0266
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

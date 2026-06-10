@@ -1,0 +1,91 @@
+{
+  "stock_code": "PFIZER",
+  "trained_at": "2026-06-07T22:53:10.903171+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.382,
+      "f1": 0.312
+    },
+    "et": {
+      "accuracy": 0.409,
+      "f1": 0.285
+    },
+    "gbc": {
+      "accuracy": NaN,
+      "f1": NaN
+    },
+    "mlp": {
+      "accuracy": 0.391,
+      "f1": 0.335
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 110.22,
+    "mae": 92.87,
+    "r2": 0.289
+  },
+  "top_features": {
+    "close_vs_sma200": 0.0941,
+    "macd_signal": 0.0712,
+    "macd": 0.0579,
+    "atr": 0.0476,
+    "sma20_slope": 0.0451,
+    "body_pct": 0.045,
+    "obv_sma_ratio": 0.038,
+    "obv_roc5": 0.0377,
+    "vol_sma_ratio": 0.0372,
+    "close_vs_sma50": 0.0322
+  },
+  "feature_importances": {
+    "rsi": 0.0235,
+    "rsi_lag1": 0.0194,
+    "rsi_lag3": 0.0152,
+    "rsi_ma5": 0.0294,
+    "macd": 0.0579,
+    "macd_signal": 0.0712,
+    "macd_hist": 0.0158,
+    "macd_hist_lag1": 0.0173,
+    "macd_hist_lag3": 0.032,
+    "close_vs_sma20": 0.0205,
+    "close_vs_sma50": 0.0322,
+    "close_vs_sma200": 0.0941,
+    "above_sma20": 0.0,
+    "above_sma50": 0.0017,
+    "above_sma200": 0.0249,
+    "sma20_slope": 0.0451,
+    "sma50_slope": 0.0274,
+    "stoch_k": 0.0098,
+    "stoch_d": 0.0218,
+    "bb_pct": 0.0238,
+    "return_1d": 0.0257,
+    "return_lag1": 0.0211,
+    "return_lag2": 0.0152,
+    "return_3d": 0.0263,
+    "price_momentum_5": 0.0211,
+    "price_momentum_10": 0.0166,
+    "atr": 0.0476,
+    "high_low_range": 0.0255,
+    "vol_sma_ratio": 0.0372,
+    "vol_ratio_lag1": 0.0146,
+    "obv_roc5": 0.0377,
+    "obv_sma_ratio": 0.038,
+    "body_pct": 0.045,
+    "upper_wick": 0.0318,
+    "lower_wick": 0.0137
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

@@ -1,0 +1,91 @@
+{
+  "stock_code": "NEOCHE",
+  "trained_at": "2026-06-07T22:41:01.195828+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.318,
+      "f1": 0.22
+    },
+    "et": {
+      "accuracy": 0.318,
+      "f1": 0.227
+    },
+    "gbc": {
+      "accuracy": 0.318,
+      "f1": 0.223
+    },
+    "mlp": {
+      "accuracy": 0.336,
+      "f1": 0.302
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 112.3,
+    "mae": 84.42,
+    "r2": 0.632
+  },
+  "top_features": {
+    "atr": 0.0628,
+    "obv_sma_ratio": 0.0532,
+    "stoch_d": 0.0517,
+    "upper_wick": 0.0448,
+    "obv_roc5": 0.0425,
+    "macd_hist_lag3": 0.0421,
+    "bb_pct": 0.0411,
+    "sma20_slope": 0.0353,
+    "rsi_lag1": 0.0349,
+    "close_vs_sma20": 0.033
+  },
+  "feature_importances": {
+    "rsi": 0.031,
+    "rsi_lag1": 0.0349,
+    "rsi_lag3": 0.015,
+    "rsi_ma5": 0.0303,
+    "macd": 0.0306,
+    "macd_signal": 0.0299,
+    "macd_hist": 0.0316,
+    "macd_hist_lag1": 0.0311,
+    "macd_hist_lag3": 0.0421,
+    "close_vs_sma20": 0.033,
+    "close_vs_sma50": 0.0149,
+    "close_vs_sma200": 0.0196,
+    "above_sma20": 0.0022,
+    "above_sma50": 0.001,
+    "above_sma200": 0.0029,
+    "sma20_slope": 0.0353,
+    "sma50_slope": 0.0321,
+    "stoch_k": 0.0191,
+    "stoch_d": 0.0517,
+    "bb_pct": 0.0411,
+    "return_1d": 0.0178,
+    "return_lag1": 0.0235,
+    "return_lag2": 0.0253,
+    "return_3d": 0.0152,
+    "price_momentum_5": 0.0188,
+    "price_momentum_10": 0.0243,
+    "atr": 0.0628,
+    "high_low_range": 0.022,
+    "vol_sma_ratio": 0.027,
+    "vol_ratio_lag1": 0.0325,
+    "obv_roc5": 0.0425,
+    "obv_sma_ratio": 0.0532,
+    "body_pct": 0.0315,
+    "upper_wick": 0.0448,
+    "lower_wick": 0.0297
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

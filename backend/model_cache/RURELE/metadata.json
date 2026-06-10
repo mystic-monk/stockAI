@@ -1,0 +1,91 @@
+{
+  "stock_code": "RURELE",
+  "trained_at": "2026-06-07T22:44:40.741208+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.418,
+      "f1": 0.321
+    },
+    "et": {
+      "accuracy": 0.382,
+      "f1": 0.29
+    },
+    "gbc": {
+      "accuracy": 0.409,
+      "f1": 0.336
+    },
+    "mlp": {
+      "accuracy": 0.345,
+      "f1": 0.347
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 11.07,
+    "mae": 8.18,
+    "r2": 0.579
+  },
+  "top_features": {
+    "sma50_slope": 0.1382,
+    "macd_signal": 0.0579,
+    "macd": 0.0443,
+    "close_vs_sma200": 0.0428,
+    "obv_roc5": 0.0395,
+    "macd_hist": 0.037,
+    "return_lag1": 0.0343,
+    "close_vs_sma50": 0.0319,
+    "price_momentum_10": 0.0303,
+    "high_low_range": 0.0303
+  },
+  "feature_importances": {
+    "rsi": 0.0195,
+    "rsi_lag1": 0.029,
+    "rsi_lag3": 0.0219,
+    "rsi_ma5": 0.0289,
+    "macd": 0.0443,
+    "macd_signal": 0.0579,
+    "macd_hist": 0.037,
+    "macd_hist_lag1": 0.0185,
+    "macd_hist_lag3": 0.0195,
+    "close_vs_sma20": 0.0178,
+    "close_vs_sma50": 0.0319,
+    "close_vs_sma200": 0.0428,
+    "above_sma20": 0.0003,
+    "above_sma50": 0.0004,
+    "above_sma200": 0.0009,
+    "sma20_slope": 0.0253,
+    "sma50_slope": 0.1382,
+    "stoch_k": 0.0235,
+    "stoch_d": 0.0285,
+    "bb_pct": 0.0202,
+    "return_1d": 0.0197,
+    "return_lag1": 0.0343,
+    "return_lag2": 0.0228,
+    "return_3d": 0.0245,
+    "price_momentum_5": 0.0259,
+    "price_momentum_10": 0.0303,
+    "atr": 0.0239,
+    "high_low_range": 0.0303,
+    "vol_sma_ratio": 0.024,
+    "vol_ratio_lag1": 0.0191,
+    "obv_roc5": 0.0395,
+    "obv_sma_ratio": 0.0297,
+    "body_pct": 0.0278,
+    "upper_wick": 0.0201,
+    "lower_wick": 0.0218
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

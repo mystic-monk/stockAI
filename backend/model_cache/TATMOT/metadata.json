@@ -1,0 +1,91 @@
+{
+  "stock_code": "TATMOT",
+  "trained_at": "2026-06-07T22:21:57.856051+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.264,
+      "f1": 0.234
+    },
+    "et": {
+      "accuracy": 0.227,
+      "f1": 0.176
+    },
+    "gbc": {
+      "accuracy": 0.227,
+      "f1": 0.191
+    },
+    "mlp": {
+      "accuracy": 0.245,
+      "f1": 0.211
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 10.91,
+    "mae": 8.73,
+    "r2": 0.775
+  },
+  "top_features": {
+    "macd_hist_lag3": 0.0836,
+    "sma50_slope": 0.0724,
+    "macd_hist": 0.0591,
+    "sma20_slope": 0.0568,
+    "close_vs_sma200": 0.0518,
+    "macd_hist_lag1": 0.0472,
+    "price_momentum_5": 0.0443,
+    "rsi_ma5": 0.0366,
+    "atr": 0.0348,
+    "vol_sma_ratio": 0.0322
+  },
+  "feature_importances": {
+    "rsi": 0.0229,
+    "rsi_lag1": 0.0209,
+    "rsi_lag3": 0.0293,
+    "rsi_ma5": 0.0366,
+    "macd": 0.0276,
+    "macd_signal": 0.0303,
+    "macd_hist": 0.0591,
+    "macd_hist_lag1": 0.0472,
+    "macd_hist_lag3": 0.0836,
+    "close_vs_sma20": 0.0254,
+    "close_vs_sma50": 0.0174,
+    "close_vs_sma200": 0.0518,
+    "above_sma20": 0.001,
+    "above_sma50": 0.0012,
+    "above_sma200": 0.0,
+    "sma20_slope": 0.0568,
+    "sma50_slope": 0.0724,
+    "stoch_k": 0.0256,
+    "stoch_d": 0.0231,
+    "bb_pct": 0.0171,
+    "return_1d": 0.0225,
+    "return_lag1": 0.019,
+    "return_lag2": 0.0168,
+    "return_3d": 0.0201,
+    "price_momentum_5": 0.0443,
+    "price_momentum_10": 0.0314,
+    "atr": 0.0348,
+    "high_low_range": 0.0152,
+    "vol_sma_ratio": 0.0322,
+    "vol_ratio_lag1": 0.0195,
+    "obv_roc5": 0.0238,
+    "obv_sma_ratio": 0.0171,
+    "body_pct": 0.0174,
+    "upper_wick": 0.0158,
+    "lower_wick": 0.0209
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

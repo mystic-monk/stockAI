@@ -11,13 +11,14 @@ AI-powered stock analysis and paper trading for NSE stocks via the ICICIDirect B
 | **Technical indicators** | RSI, MACD, Bollinger Bands, Stochastic, ATR, OBV, Volume Ratio |
 | **AI Signal** | BUY / SELL / HOLD from a 5-model ML ensemble (Random Forest, Extra Trees, GBM, XGBoost, MLP) |
 | **Decision card** | Instant indicator-based quick signal before AI runs; full AI signal with confidence, price targets, stop-loss after analysis |
+| **Discover** | Scan all popular NSE stocks for BUY/SELL/HOLD signals; filter by signal, sector, sort by confidence |
 | **Portfolio view** | Live Demat holdings from Breeze API with P&L, inline AI signals, and sector info |
 | **AI Portfolio analysis** | Bulk signal generation for all holdings with 1-hour cache (no repeat on refresh) |
-| **Market Opportunities** | Scan popular stocks not in your portfolio for BUY signals |
 | **Peer comparison** | Normalized % return chart vs sector peers (auto-loaded + manual add) |
 | **Paper trading** | Simulated BUY/SELL orders against a ₹10,00,000 virtual portfolio |
-| **Model monitor** | CV accuracy per model vs 33% random baseline; retrain verdict and one-click retrain |
-| **Session refresh** | Update the Breeze session token from the UI — no server restart needed |
+| **Model monitor** | CV accuracy per model vs 33% random baseline; retrain verdict and one-click retrain / tune |
+| **Hyperparameter tuning** | Optuna-based HPO (20 trials per model) triggered from the Models tab |
+| **Session management** | Update API Key, Secret Key, and Session ID from the UI — no server restart needed |
 
 ## Architecture
 
@@ -28,15 +29,15 @@ StockApp/
 │   ├── core/              config (pydantic-settings) · breeze_client singleton
 │   ├── models/            Pydantic schemas
 │   └── services/
-│       ├── data_fetcher.py     Breeze API wrapper, TTL caches
-│       ├── feature_engineering.py  33 technical + lag features
-│       ├── ml_ensemble.py      5-model ensemble, CV metrics, model persistence
-│       ├── ml_models.py        Single-stock RF + MLP predictor
-│       ├── predictor.py        Signal generation pipeline
-│       └── model_store.py      Disk persistence + metadata for trained models
+│       ├── data_fetcher.py         Breeze API wrapper, TTL caches
+│       ├── feature_engineering.py  35 technical + lag + OBV features
+│       ├── ml_ensemble.py          5-model ensemble, Optuna HPO, soft-vote inference
+│       ├── ml_models.py            Single-stock RF + MLP predictor
+│       ├── predictor.py            Signal generation pipeline
+│       └── model_store.py          Disk persistence + metadata for trained models
 └── frontend/              React + Vite
     └── src/
-        ├── pages/          AnalysisPage · PortfolioPage · ModelMonitorPage
+        ├── pages/          AnalysisPage · PortfolioPage · DiscoverPage · ModelMonitorPage
         ├── components/
         │   ├── charts/     CandlestickChart · VolumeChart · RsiChart · MacdChart
         │   │               (lightweight-charts v5 API)
@@ -44,8 +45,8 @@ StockApp/
         │   ├── portfolio/  PortfolioDashboard · PositionTable · TradePanel
         │   ├── prediction/ IndicatorPanel
         │   ├── stock/      QuoteBar · StockSearch
-        │   └── layout/     Header (with session modal) · Sidebar
-        ├── store/          Zustand store with localStorage persistence
+        │   └── layout/     Header · Sidebar
+        ├── store/          Zustand store with localStorage + in-memory caching
         └── services/       Axios API client
 ```
 
@@ -63,7 +64,7 @@ StockApp/
 cd backend
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env   # fill in BREEZE_API_KEY and BREEZE_API_SECRET
+cp .env.example .env   # fill in BREEZE_API_KEY, BREEZE_API_SECRET, BREEZE_SESSION_TOKEN
 uvicorn main:app --reload --port 8000
 ```
 
@@ -75,16 +76,22 @@ npm install
 npm run dev            # http://localhost:5173
 ```
 
+### PM2 (production)
+
+```bash
+# From project root — uses .venv/bin/uvicorn
+pm2 start ecosystem.config.cjs
+```
+
 ## Daily Session Token (Breeze API)
 
 The Breeze session token expires every 24 hours. No need to edit `.env` manually:
 
 1. Click **Session** in the top-right of the app header
-2. Visit the login URL shown in the dialog
-3. Log in to ICICI Direct — copy the `apisession` value from the redirect URL
-4. Paste it into the dialog and click **Save & Reconnect**
-
-The backend updates `.env`, flushes caches, and reconnects without a restart.
+2. Enter your API Key and Secret Key (only needed once; leave blank to keep existing)
+3. Visit the login URL shown — log in to ICICI Direct
+4. Copy the `apisession` value from the redirect URL and paste it as the **Session ID**
+5. Click **Save & Reconnect** — the backend reconnects without a restart
 
 ## ML Models
 
@@ -99,10 +106,37 @@ The prediction engine uses a 5-model ensemble trained on 500 days of daily OHLCV
 | MLP Neural Net | Direction classifier (128→64→32, early stopping) |
 
 **Target**: 5-day forward return ≥ +2% → BUY, ≤ −2% → SELL, else HOLD
-**Features**: 33 features including RSI, MACD, Bollinger, Stochastic, ATR + 15 lag/trend features
-**Signal**: majority vote + confidence score; falls back to HOLD if confidence < 55%
+**Features**: 35 features — RSI, MACD, Bollinger, Stochastic, ATR, OBV rate-of-change, OBV/SMA ratio, 15 lag/trend features
+**Signal**: soft-vote (averaged class probabilities across models); falls back to HOLD if confidence < threshold
+**Targets / Stop-loss**: ATR-based (2× ATR target, 1.5× ATR stop-loss) — adapts to each stock's volatility
+**CV**: `TimeSeriesSplit` (no shuffle) — eliminates lookahead bias in accuracy reporting
 
-Retrain automatically when a stock is first analyzed. The **Models** tab shows CV accuracy per model vs the 33% random baseline and flags models that need retraining.
+Retrain automatically when a stock is first analysed. The **Models** tab shows CV accuracy per model vs the 33% random baseline, flags models that need retraining, and tracks live training jobs.
+
+### Hyperparameter Tuning
+
+Click **Tune** on any model card to run Optuna HPO in the background:
+- 20 trials per model (RF, ET, GBC, XGB, MLP) using `TimeSeriesSplit(n_splits=3)` for speed
+- Best params are saved to model metadata and used for all future predictions
+- The card shows a live **Tuning…** badge while in progress; CV scores update automatically when done
+
+## Discover
+
+The **Discover** tab scans all 20 popular NSE stocks for AI signals:
+
+- **Scan All** fetches live quotes + runs the full ensemble in parallel (~60s)
+- Cards show signal badge, BUY/SELL probability bar, ATR-based target and stop-loss
+- Filter by signal (BUY / HOLD / SELL) and sector; sort by confidence or price change
+- **Open Analysis** on any card switches to the full Analysis tab for that stock
+
+## Model Monitor
+
+- **Caching**: model data is cached in the app store for 60 seconds — switching tabs does not re-fetch
+- **Live queue**: server tracks every training/tuning job; cards show **Training…** / **Tuning…** / **Queued…** badges updated every 5s
+- **No duplicates**: the backend rejects a second queue request for a stock already in progress (HTTP 409)
+- **Auto-reload**: when all jobs finish, the model list refreshes automatically to show updated CV scores
+- **Sorting**: sort by best/worst accuracy, needs-retrain first, most stale, or name
+- **Retrain All**: queues a background retrain for every portfolio holding; skips stocks already in progress
 
 ## Environment Variables
 

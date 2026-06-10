@@ -1,6 +1,7 @@
 """Stock data routes: historical OHLCV, live quotes, indicators, popular stocks."""
 
 import logging
+import math
 import random
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -73,6 +74,17 @@ def get_peer_stocks(stock_code: str, max_peers: int = 4):
     }
 
 
+def _sanitize(obj):
+    """Recursively replace nan/inf floats with 0.0 so JSON serialisation never fails."""
+    if isinstance(obj, dict):
+        return {k: _sanitize(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize(v) for v in obj]
+    if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
+        return 0.0
+    return obj
+
+
 def _scan_one(stock: dict) -> dict:
     """Fetch quote + run ensemble for a single stock. Thread-safe."""
     code     = stock["stock_code"]
@@ -122,7 +134,7 @@ def scan_stocks():
     with ThreadPoolExecutor(max_workers=4) as pool:
         futures = {pool.submit(_scan_one, s): s for s in POPULAR_STOCKS}
         for future in as_completed(futures):
-            results.append(future.result())
+            results.append(_sanitize(future.result()))
 
     order = {"BUY": 0, "HOLD": 1, "SELL": 2, None: 3}
     results.sort(key=lambda r: (order.get(r["signal"], 3), -r["confidence"]))

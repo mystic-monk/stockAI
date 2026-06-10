@@ -1,0 +1,91 @@
+{
+  "stock_code": "BRIENT",
+  "trained_at": "2026-06-07T22:40:50.261573+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.282,
+      "f1": 0.262
+    },
+    "et": {
+      "accuracy": 0.245,
+      "f1": 0.255
+    },
+    "gbc": {
+      "accuracy": 0.282,
+      "f1": 0.263
+    },
+    "mlp": {
+      "accuracy": 0.327,
+      "f1": 0.352
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 36.72,
+    "mae": 30.7,
+    "r2": 0.527
+  },
+  "top_features": {
+    "sma50_slope": 0.0811,
+    "obv_sma_ratio": 0.072,
+    "atr": 0.0709,
+    "close_vs_sma200": 0.046,
+    "sma20_slope": 0.0415,
+    "macd_signal": 0.0408,
+    "macd": 0.0395,
+    "return_lag2": 0.0384,
+    "close_vs_sma50": 0.0371,
+    "macd_hist_lag3": 0.0341
+  },
+  "feature_importances": {
+    "rsi": 0.0178,
+    "rsi_lag1": 0.0237,
+    "rsi_lag3": 0.0251,
+    "rsi_ma5": 0.0324,
+    "macd": 0.0395,
+    "macd_signal": 0.0408,
+    "macd_hist": 0.0293,
+    "macd_hist_lag1": 0.028,
+    "macd_hist_lag3": 0.0341,
+    "close_vs_sma20": 0.0209,
+    "close_vs_sma50": 0.0371,
+    "close_vs_sma200": 0.046,
+    "above_sma20": 0.0,
+    "above_sma50": 0.0002,
+    "above_sma200": 0.0,
+    "sma20_slope": 0.0415,
+    "sma50_slope": 0.0811,
+    "stoch_k": 0.0215,
+    "stoch_d": 0.0184,
+    "bb_pct": 0.0203,
+    "return_1d": 0.0237,
+    "return_lag1": 0.0158,
+    "return_lag2": 0.0384,
+    "return_3d": 0.0224,
+    "price_momentum_5": 0.0161,
+    "price_momentum_10": 0.0203,
+    "atr": 0.0709,
+    "high_low_range": 0.03,
+    "vol_sma_ratio": 0.0204,
+    "vol_ratio_lag1": 0.0172,
+    "obv_roc5": 0.0212,
+    "obv_sma_ratio": 0.072,
+    "body_pct": 0.0255,
+    "upper_wick": 0.0278,
+    "lower_wick": 0.0207
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

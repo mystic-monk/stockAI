@@ -1,0 +1,91 @@
+{
+  "stock_code": "HERHON",
+  "trained_at": "2026-06-07T22:39:21.064663+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.409,
+      "f1": 0.346
+    },
+    "et": {
+      "accuracy": 0.436,
+      "f1": 0.393
+    },
+    "gbc": {
+      "accuracy": 0.436,
+      "f1": 0.391
+    },
+    "mlp": {
+      "accuracy": 0.273,
+      "f1": 0.267
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 149.96,
+    "mae": 128.82,
+    "r2": 0.018
+  },
+  "top_features": {
+    "rsi_ma5": 0.0638,
+    "price_momentum_10": 0.0627,
+    "bb_pct": 0.0579,
+    "close_vs_sma50": 0.0485,
+    "macd": 0.0483,
+    "rsi": 0.0437,
+    "obv_sma_ratio": 0.0414,
+    "return_1d": 0.0403,
+    "close_vs_sma20": 0.0393,
+    "macd_signal": 0.0376
+  },
+  "feature_importances": {
+    "rsi": 0.0437,
+    "rsi_lag1": 0.0245,
+    "rsi_lag3": 0.0254,
+    "rsi_ma5": 0.0638,
+    "macd": 0.0483,
+    "macd_signal": 0.0376,
+    "macd_hist": 0.029,
+    "macd_hist_lag1": 0.0208,
+    "macd_hist_lag3": 0.0268,
+    "close_vs_sma20": 0.0393,
+    "close_vs_sma50": 0.0485,
+    "close_vs_sma200": 0.0207,
+    "above_sma20": 0.0026,
+    "above_sma50": 0.0072,
+    "above_sma200": 0.0015,
+    "sma20_slope": 0.0238,
+    "sma50_slope": 0.0262,
+    "stoch_k": 0.0196,
+    "stoch_d": 0.022,
+    "bb_pct": 0.0579,
+    "return_1d": 0.0403,
+    "return_lag1": 0.0261,
+    "return_lag2": 0.015,
+    "return_3d": 0.0217,
+    "price_momentum_5": 0.0153,
+    "price_momentum_10": 0.0627,
+    "atr": 0.0334,
+    "high_low_range": 0.0139,
+    "vol_sma_ratio": 0.0212,
+    "vol_ratio_lag1": 0.0189,
+    "obv_roc5": 0.0238,
+    "obv_sma_ratio": 0.0414,
+    "body_pct": 0.0341,
+    "upper_wick": 0.0222,
+    "lower_wick": 0.0208
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

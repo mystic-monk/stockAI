@@ -1,0 +1,117 @@
+{
+  "stock_code": "KOTMAH",
+  "trained_at": "2026-06-07T22:20:41.070862+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.455,
+      "f1": 0.42
+    },
+    "et": {
+      "accuracy": 0.455,
+      "f1": 0.431
+    },
+    "gbc": {
+      "accuracy": 0.4,
+      "f1": 0.392
+    },
+    "mlp": {
+      "accuracy": 0.482,
+      "f1": 0.407
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 287.4,
+    "mae": 282.09,
+    "r2": -1586.387
+  },
+  "top_features": {
+    "bb_pct": 0.0904,
+    "macd_hist_lag3": 0.0669,
+    "macd_signal": 0.0568,
+    "price_momentum_10": 0.0514,
+    "macd_hist": 0.0484,
+    "macd_hist_lag1": 0.0471,
+    "close_vs_sma20": 0.0429,
+    "atr": 0.0401,
+    "close_vs_sma50": 0.04,
+    "stoch_k": 0.0373
+  },
+  "feature_importances": {
+    "rsi": 0.0258,
+    "rsi_lag1": 0.0265,
+    "rsi_lag3": 0.0177,
+    "rsi_ma5": 0.0191,
+    "macd": 0.0263,
+    "macd_signal": 0.0568,
+    "macd_hist": 0.0484,
+    "macd_hist_lag1": 0.0471,
+    "macd_hist_lag3": 0.0669,
+    "close_vs_sma20": 0.0429,
+    "close_vs_sma50": 0.04,
+    "close_vs_sma200": 0.0154,
+    "above_sma20": 0.0005,
+    "above_sma50": 0.0012,
+    "above_sma200": 0.0015,
+    "sma20_slope": 0.0356,
+    "sma50_slope": 0.0336,
+    "stoch_k": 0.0373,
+    "stoch_d": 0.0355,
+    "bb_pct": 0.0904,
+    "return_1d": 0.0194,
+    "return_lag1": 0.0101,
+    "return_lag2": 0.0198,
+    "return_3d": 0.0187,
+    "price_momentum_5": 0.03,
+    "price_momentum_10": 0.0514,
+    "atr": 0.0401,
+    "high_low_range": 0.0224,
+    "vol_sma_ratio": 0.018,
+    "vol_ratio_lag1": 0.0165,
+    "obv_roc5": 0.0252,
+    "obv_sma_ratio": 0.0207,
+    "body_pct": 0.012,
+    "upper_wick": 0.0169,
+    "lower_wick": 0.0103
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false,
+  "tuned_params": {
+    "rf": {
+      "n_estimators": 307,
+      "max_depth": 5,
+      "min_samples_split": 19,
+      "max_features": "sqrt"
+    },
+    "et": {
+      "n_estimators": 353,
+      "max_depth": 8,
+      "max_features": 0.7
+    },
+    "gbc": {
+      "n_estimators": 208,
+      "max_depth": 3,
+      "learning_rate": 0.08682659858528292,
+      "subsample": 0.8492509936694798
+    },
+    "mlp": {
+      "n_layers": 2,
+      "layer_0": 64,
+      "layer_1": 128,
+      "alpha": 0.0032101823742712995
+    }
+  },
+  "tuned_at": "2026-06-07T23:23:27.786028+00:00"
+}

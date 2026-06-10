@@ -1,0 +1,118 @@
+{
+  "stock_code": "POWGRI",
+  "trained_at": "2026-06-07T22:22:01.227791+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.373,
+      "f1": 0.329
+    },
+    "et": {
+      "accuracy": 0.409,
+      "f1": 0.341
+    },
+    "gbc": {
+      "accuracy": 0.291,
+      "f1": 0.247
+    },
+    "mlp": {
+      "accuracy": 0.482,
+      "f1": 0.432
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 8.9,
+    "mae": 7.28,
+    "r2": 0.457
+  },
+  "top_features": {
+    "close_vs_sma200": 0.0638,
+    "obv_sma_ratio": 0.0544,
+    "sma50_slope": 0.0528,
+    "macd_hist": 0.0474,
+    "atr": 0.044,
+    "price_momentum_10": 0.0391,
+    "macd_hist_lag3": 0.0363,
+    "sma20_slope": 0.0362,
+    "price_momentum_5": 0.0359,
+    "close_vs_sma50": 0.035
+  },
+  "feature_importances": {
+    "rsi": 0.022,
+    "rsi_lag1": 0.0256,
+    "rsi_lag3": 0.0218,
+    "rsi_ma5": 0.0331,
+    "macd": 0.0286,
+    "macd_signal": 0.0345,
+    "macd_hist": 0.0474,
+    "macd_hist_lag1": 0.0341,
+    "macd_hist_lag3": 0.0363,
+    "close_vs_sma20": 0.0206,
+    "close_vs_sma50": 0.035,
+    "close_vs_sma200": 0.0638,
+    "above_sma20": 0.0007,
+    "above_sma50": 0.0007,
+    "above_sma200": 0.0044,
+    "sma20_slope": 0.0362,
+    "sma50_slope": 0.0528,
+    "stoch_k": 0.0216,
+    "stoch_d": 0.0294,
+    "bb_pct": 0.0304,
+    "return_1d": 0.0211,
+    "return_lag1": 0.0145,
+    "return_lag2": 0.0257,
+    "return_3d": 0.0219,
+    "price_momentum_5": 0.0359,
+    "price_momentum_10": 0.0391,
+    "atr": 0.044,
+    "high_low_range": 0.0252,
+    "vol_sma_ratio": 0.0197,
+    "vol_ratio_lag1": 0.0257,
+    "obv_roc5": 0.0317,
+    "obv_sma_ratio": 0.0544,
+    "body_pct": 0.0214,
+    "upper_wick": 0.0241,
+    "lower_wick": 0.0168
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false,
+  "tuned_params": {
+    "rf": {
+      "n_estimators": 136,
+      "max_depth": 5,
+      "min_samples_split": 6,
+      "max_features": "log2"
+    },
+    "et": {
+      "n_estimators": 314,
+      "max_depth": 10,
+      "max_features": "log2"
+    },
+    "gbc": {
+      "n_estimators": 121,
+      "max_depth": 6,
+      "learning_rate": 0.19179545784491686,
+      "subsample": 0.9874967304955367
+    },
+    "mlp": {
+      "n_layers": 3,
+      "layer_0": 64,
+      "layer_1": 64,
+      "layer_2": 128,
+      "alpha": 0.005131180120727855
+    }
+  },
+  "tuned_at": "2026-06-07T23:02:11.148107+00:00"
+}

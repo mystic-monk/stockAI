@@ -1,0 +1,91 @@
+{
+  "stock_code": "SUPIND",
+  "trained_at": "2026-06-07T22:55:50.914967+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.291,
+      "f1": 0.212
+    },
+    "et": {
+      "accuracy": 0.309,
+      "f1": 0.238
+    },
+    "gbc": {
+      "accuracy": 0.291,
+      "f1": 0.223
+    },
+    "mlp": {
+      "accuracy": 0.345,
+      "f1": 0.334
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 56.68,
+    "mae": 49.2,
+    "r2": 0.648
+  },
+  "top_features": {
+    "high_low_range": 0.0606,
+    "atr": 0.0575,
+    "close_vs_sma200": 0.0533,
+    "macd_hist_lag3": 0.0465,
+    "obv_sma_ratio": 0.0461,
+    "lower_wick": 0.0433,
+    "sma50_slope": 0.0374,
+    "price_momentum_5": 0.0357,
+    "macd_hist_lag1": 0.0353,
+    "sma20_slope": 0.0348
+  },
+  "feature_importances": {
+    "rsi": 0.0322,
+    "rsi_lag1": 0.0254,
+    "rsi_lag3": 0.0184,
+    "rsi_ma5": 0.0233,
+    "macd": 0.0272,
+    "macd_signal": 0.0289,
+    "macd_hist": 0.0314,
+    "macd_hist_lag1": 0.0353,
+    "macd_hist_lag3": 0.0465,
+    "close_vs_sma20": 0.0292,
+    "close_vs_sma50": 0.0264,
+    "close_vs_sma200": 0.0533,
+    "above_sma20": 0.0008,
+    "above_sma50": 0.0016,
+    "above_sma200": 0.0009,
+    "sma20_slope": 0.0348,
+    "sma50_slope": 0.0374,
+    "stoch_k": 0.0263,
+    "stoch_d": 0.0233,
+    "bb_pct": 0.0149,
+    "return_1d": 0.02,
+    "return_lag1": 0.0282,
+    "return_lag2": 0.0194,
+    "return_3d": 0.0206,
+    "price_momentum_5": 0.0357,
+    "price_momentum_10": 0.0281,
+    "atr": 0.0575,
+    "high_low_range": 0.0606,
+    "vol_sma_ratio": 0.0251,
+    "vol_ratio_lag1": 0.0244,
+    "obv_roc5": 0.0295,
+    "obv_sma_ratio": 0.0461,
+    "body_pct": 0.0118,
+    "upper_wick": 0.0322,
+    "lower_wick": 0.0433
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

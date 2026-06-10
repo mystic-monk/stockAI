@@ -1,0 +1,118 @@
+{
+  "stock_code": "TCS",
+  "trained_at": "2026-06-07T22:20:12.681853+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.382,
+      "f1": 0.295
+    },
+    "et": {
+      "accuracy": 0.382,
+      "f1": 0.289
+    },
+    "gbc": {
+      "accuracy": 0.382,
+      "f1": 0.292
+    },
+    "mlp": {
+      "accuracy": 0.491,
+      "f1": 0.414
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 124.09,
+    "mae": 101.89,
+    "r2": -0.123
+  },
+  "top_features": {
+    "macd_hist_lag3": 0.0727,
+    "atr": 0.067,
+    "close_vs_sma200": 0.0642,
+    "sma50_slope": 0.0625,
+    "macd_hist_lag1": 0.0578,
+    "vol_ratio_lag1": 0.0488,
+    "stoch_d": 0.0422,
+    "macd_signal": 0.0414,
+    "macd_hist": 0.0397,
+    "obv_roc5": 0.0372
+  },
+  "feature_importances": {
+    "rsi": 0.0238,
+    "rsi_lag1": 0.0131,
+    "rsi_lag3": 0.0199,
+    "rsi_ma5": 0.0162,
+    "macd": 0.0307,
+    "macd_signal": 0.0414,
+    "macd_hist": 0.0397,
+    "macd_hist_lag1": 0.0578,
+    "macd_hist_lag3": 0.0727,
+    "close_vs_sma20": 0.0161,
+    "close_vs_sma50": 0.0287,
+    "close_vs_sma200": 0.0642,
+    "above_sma20": 0.0018,
+    "above_sma50": 0.0083,
+    "above_sma200": 0.004,
+    "sma20_slope": 0.0233,
+    "sma50_slope": 0.0625,
+    "stoch_k": 0.0148,
+    "stoch_d": 0.0422,
+    "bb_pct": 0.0262,
+    "return_1d": 0.0169,
+    "return_lag1": 0.024,
+    "return_lag2": 0.0078,
+    "return_3d": 0.0161,
+    "price_momentum_5": 0.0211,
+    "price_momentum_10": 0.029,
+    "atr": 0.067,
+    "high_low_range": 0.0142,
+    "vol_sma_ratio": 0.0129,
+    "vol_ratio_lag1": 0.0488,
+    "obv_roc5": 0.0372,
+    "obv_sma_ratio": 0.0315,
+    "body_pct": 0.0317,
+    "upper_wick": 0.0239,
+    "lower_wick": 0.0106
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false,
+  "tuned_params": {
+    "rf": {
+      "n_estimators": 119,
+      "max_depth": 10,
+      "min_samples_split": 28,
+      "max_features": "log2"
+    },
+    "et": {
+      "n_estimators": 477,
+      "max_depth": 9,
+      "max_features": 0.5
+    },
+    "gbc": {
+      "n_estimators": 190,
+      "max_depth": 4,
+      "learning_rate": 0.010370391067365115,
+      "subsample": 0.6021874958032263
+    },
+    "mlp": {
+      "n_layers": 3,
+      "layer_0": 64,
+      "layer_1": 32,
+      "layer_2": 128,
+      "alpha": 0.0002881237873474306
+    }
+  },
+  "tuned_at": "2026-06-07T23:08:37.260140+00:00"
+}

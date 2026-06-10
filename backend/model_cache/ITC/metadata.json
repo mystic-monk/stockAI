@@ -1,0 +1,91 @@
+{
+  "stock_code": "ITC",
+  "trained_at": "2026-06-07T22:21:13.719214+00:00",
+  "n_samples": 132,
+  "n_features": 35,
+  "data_from": "2025-11-14",
+  "data_to": "2026-05-29",
+  "models_available": [
+    "rf",
+    "et",
+    "gbc",
+    "mlp",
+    "gbr"
+  ],
+  "cv_metrics": {
+    "rf": {
+      "accuracy": 0.218,
+      "f1": 0.168
+    },
+    "et": {
+      "accuracy": 0.282,
+      "f1": 0.209
+    },
+    "gbc": {
+      "accuracy": NaN,
+      "f1": NaN
+    },
+    "mlp": {
+      "accuracy": 0.282,
+      "f1": 0.265
+    }
+  },
+  "gbr_metrics": {
+    "rmse": 7.42,
+    "mae": 5.27,
+    "r2": 0.408
+  },
+  "top_features": {
+    "close_vs_sma200": 0.0959,
+    "atr": 0.0573,
+    "macd_hist_lag1": 0.0571,
+    "macd_hist_lag3": 0.0547,
+    "vol_sma_ratio": 0.0506,
+    "sma50_slope": 0.0453,
+    "obv_sma_ratio": 0.041,
+    "stoch_d": 0.0405,
+    "return_3d": 0.0396,
+    "macd": 0.0385
+  },
+  "feature_importances": {
+    "rsi": 0.0159,
+    "rsi_lag1": 0.0166,
+    "rsi_lag3": 0.023,
+    "rsi_ma5": 0.0308,
+    "macd": 0.0385,
+    "macd_signal": 0.0238,
+    "macd_hist": 0.0379,
+    "macd_hist_lag1": 0.0571,
+    "macd_hist_lag3": 0.0547,
+    "close_vs_sma20": 0.0161,
+    "close_vs_sma50": 0.0293,
+    "close_vs_sma200": 0.0959,
+    "above_sma20": 0.0015,
+    "above_sma50": 0.0031,
+    "above_sma200": 0.0,
+    "sma20_slope": 0.0234,
+    "sma50_slope": 0.0453,
+    "stoch_k": 0.0227,
+    "stoch_d": 0.0405,
+    "bb_pct": 0.0128,
+    "return_1d": 0.0307,
+    "return_lag1": 0.0182,
+    "return_lag2": 0.0161,
+    "return_3d": 0.0396,
+    "price_momentum_5": 0.0216,
+    "price_momentum_10": 0.0205,
+    "atr": 0.0573,
+    "high_low_range": 0.0165,
+    "vol_sma_ratio": 0.0506,
+    "vol_ratio_lag1": 0.0281,
+    "obv_roc5": 0.0277,
+    "obv_sma_ratio": 0.041,
+    "body_pct": 0.0204,
+    "upper_wick": 0.0084,
+    "lower_wick": 0.0143
+  },
+  "lookahead_days": 5,
+  "signal_threshold": 0.02,
+  "days_since_trained": 0,
+  "is_stale": false
+}

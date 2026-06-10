@@ -188,10 +188,15 @@ export default function Header() {
   return (
     <>
       <header className="header">
-        <div className="header-logo">
+        <button
+          className="header-logo"
+          onClick={() => setActiveTab('analysis')}
+          title="Go to Analysis"
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+        >
           <TrendingUp size={20} color="var(--accent-blue)" />
           Stock<span>AI</span>
-        </div>
+        </button>
 
         <StockSearch />
 
